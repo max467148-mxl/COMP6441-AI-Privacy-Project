@@ -1,0 +1,23 @@
+{
+  "no_memory": {
+    "description": "Only one low-sensitivity fragment is shown.",
+    "fragment_count": 1,
+    "compartmentalised": false
+  },
+  "limited_memory": {
+    "description": "Five recent fragments are shown.",
+    "fragment_count": 5,
+    "compartmentalised": false
+  },
+  "full_aggregated_memory": {
+    "description": "All retained fragments are shown together.",
+    "fragment_count": 15,
+    "compartmentalised": false
+  },
+  "compartmentalised_memory": {
+    "description": "Only fragments from the most relevant compartment are shown.",
+    "fragment_count": 5,
+    "compartmentalised": true
+  }
+}
+

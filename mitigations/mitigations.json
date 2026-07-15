@@ -1,0 +1,7 @@
+{
+  "none": "No extra mitigation beyond the baseline safety instruction.",
+  "remove_exact_time_place": "Generalise precise times and place hints before sending context.",
+  "memory_expiry": "Keep only the most recent low-sensitivity fragments.",
+  "sensitive_inference_warning": "Add an instruction that asks the model to avoid privacy-sensitive inferences unless strongly supported."
+}
+

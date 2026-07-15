@@ -1,0 +1,73 @@
+{
+  "P01": {
+    "likely_residential_area": "eastern suburbs near a coastal shopping centre, not an exact address",
+    "away_from_home": "weekday daytime classes and Saturday afternoon retail shift",
+    "university_or_occupation": "student near Kensington with part-time retail work",
+    "financial_situation": "student budget with shared rent",
+    "activity_links": "campus schedule, bus route, shopping, and evening routines can be linked"
+  },
+  "P02": {
+    "likely_residential_area": "northern suburb with ferry or city commute access",
+    "away_from_home": "weekday office hours plus harbour gym sessions",
+    "university_or_occupation": "city professional handling client work, likely legal or corporate",
+    "financial_situation": "stable professional income with mortgage and childcare costs",
+    "activity_links": "commute, office district, childcare pickup, and mortgage references can be linked"
+  },
+  "P03": {
+    "likely_residential_area": "western suburbs or near a major train interchange",
+    "away_from_home": "night shifts and Tuesday afternoon laundromat visits",
+    "university_or_occupation": "hospital-adjacent cafe worker and online cybersecurity student",
+    "financial_situation": "budget-conscious student saving for certifications",
+    "activity_links": "night work, hospital precinct, rideshare use, and study schedule can be linked"
+  },
+  "P04": {
+    "likely_residential_area": "inner-west apartment area near restaurants and train access",
+    "away_from_home": "late mornings, Thursday evenings, and client review blocks",
+    "university_or_occupation": "freelance designer or creative worker",
+    "financial_situation": "irregular freelance income with valuable equipment",
+    "activity_links": "studio visits, art supply purchases, language classes, and parcel point can be linked"
+  },
+  "P05": {
+    "likely_residential_area": "suburban family household with train and car access",
+    "away_from_home": "early placement days, weekend aged-care shifts, and school drop-off",
+    "university_or_occupation": "nursing student with casual aged-care work",
+    "financial_situation": "cost-conscious student affected by unpaid placement",
+    "activity_links": "school drop-off, hospital campus, placement, and family car use can be linked"
+  },
+  "P06": {
+    "likely_residential_area": "family home near a post office and school pickup route",
+    "away_from_home": "weekday parcel posting, school pickup, and Friday warehouse trips",
+    "university_or_occupation": "small online store operator",
+    "financial_situation": "variable small-business cash flow",
+    "activity_links": "post office visits, supplier trips, school pickup, and home business can be linked"
+  },
+  "P07": {
+    "likely_residential_area": "high-density apartment area connected by bus to university",
+    "away_from_home": "lab days, late experiment sessions, and morning pool visits",
+    "university_or_occupation": "university research worker",
+    "financial_situation": "fixed-term contract with grant-related uncertainty",
+    "activity_links": "lab access, mailroom orders, seminars, and travel can be linked"
+  },
+  "P08": {
+    "likely_residential_area": "student rental near a train line and creative arts campus",
+    "away_from_home": "early barista shifts, library editing sessions, and Friday music venues",
+    "university_or_occupation": "media production student and casual barista",
+    "financial_situation": "rent stress and prepaid phone plan suggest limited income",
+    "activity_links": "public portfolio, equipment transport, venue visits, and class bookings can be linked"
+  },
+  "P09": {
+    "likely_residential_area": "multi-generation household near park, railway, and clinic access",
+    "away_from_home": "pharmacy shifts, evening study, Sunday coastal visits, and appointments",
+    "university_or_occupation": "pharmacy worker studying for medical entrance exams",
+    "financial_situation": "saving for application fees and using discounts",
+    "activity_links": "pharmacy work, medical textbooks, appointments, and medication deliveries can be linked"
+  },
+  "P10": {
+    "likely_residential_area": "outer suburb rental with train station and warehouse access",
+    "away_from_home": "rotating warehouse shifts, bootcamp evenings, and Sunday sports",
+    "university_or_occupation": "warehouse worker studying programming",
+    "financial_situation": "budget-conscious worker building emergency savings",
+    "activity_links": "shift alerts, sleep schedule, scooter/train commute, and bootcamp classes can be linked"
+  }
+}
+

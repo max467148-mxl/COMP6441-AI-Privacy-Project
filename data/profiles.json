@@ -1,0 +1,213 @@
+[
+  {
+    "id": "P01",
+    "name": "Avery Lin",
+    "fragments": [
+      "Usually catches the 7:42 bus from a stop near a coastal shopping centre.",
+      "Studies in a large campus library three days each week.",
+      "Often buys groceries after evening classes from an Asian supermarket.",
+      "Mentions that rent is paid monthly and shared with two housemates.",
+      "Uses a fitness app after 9 pm on weekdays.",
+      "Orders takeaway only on nights before early laboratory sessions.",
+      "Keeps a reusable cup at a cafe beside a light rail stop.",
+      "Checks weather before walking to an ocean pool on weekends.",
+      "Works a four-hour retail shift on Saturday afternoons.",
+      "Receives parcel notifications from a locker inside a shopping centre.",
+      "Avoids late trains because the walk home feels quiet.",
+      "Has a student discount for public transport.",
+      "Usually studies near Kensington after lunch.",
+      "Buys budget meal kits at the end of the month.",
+      "Turns off phone notifications during evening tutorials."
+    ]
+  },
+  {
+    "id": "P02",
+    "name": "Blake Morgan",
+    "fragments": [
+      "Arrives at a city office tower before 8:30 am on most weekdays.",
+      "Takes a ferry when the weather is clear.",
+      "Mentions a long commute from a quiet northern suburb.",
+      "Eats lunch near a legal district twice a week.",
+      "Books gym classes close to the harbour after work.",
+      "Pays for parking only when late for morning meetings.",
+      "Keeps client files separate from personal notes.",
+      "Orders groceries online on Sunday evenings.",
+      "Usually unavailable between 6 pm and 7 pm for childcare pickup.",
+      "Uses a budgeting app to track mortgage payments.",
+      "Prefers cafes with meeting rooms for confidential calls.",
+      "Attends professional training once a month.",
+      "Receives school newsletter reminders.",
+      "Uses noise cancelling headphones during ferry trips.",
+      "Checks calendar carefully before public holidays."
+    ]
+  },
+  {
+    "id": "P03",
+    "name": "Casey Patel",
+    "fragments": [
+      "Works night shifts in a hospital-adjacent cafe.",
+      "Sleeps through late morning on weekdays.",
+      "Takes rideshare trips after midnight when buses are infrequent.",
+      "Studies cybersecurity online from home.",
+      "Buys groceries from a discount store near a major train interchange.",
+      "Mentions saving for certification exams.",
+      "Usually logs into class recordings after 2 pm.",
+      "Avoids sharing live location with friends.",
+      "Uses a laundromat on Tuesday afternoons.",
+      "Orders pharmacy items near the hospital precinct.",
+      "Has irregular meal times during exam weeks.",
+      "Keeps work and study accounts separate.",
+      "Spends weekends visiting family in western suburbs.",
+      "Uses public Wi-Fi only through a VPN.",
+      "Often carries a staff meal card."
+    ]
+  },
+  {
+    "id": "P04",
+    "name": "Drew Chen",
+    "fragments": [
+      "Cycles to a design studio three mornings each week.",
+      "Posts photos from mural lanes but avoids tagging exact locations.",
+      "Mentions a compact apartment above small restaurants.",
+      "Buys art supplies near an inner-west train station.",
+      "Works freelance and invoices clients monthly.",
+      "Attends evening language classes on Thursdays.",
+      "Usually leaves home around 10 am.",
+      "Has irregular income but owns expensive camera gear.",
+      "Uses coworking spaces during heatwaves.",
+      "Orders vegetarian meals from nearby restaurants.",
+      "Takes short trips to gallery openings.",
+      "Keeps backup drives in a locked drawer.",
+      "Receives package deliveries at a parcel point.",
+      "Prefers walking routes with busy streets.",
+      "Uses calendar blocks called client review."
+    ]
+  },
+  {
+    "id": "P05",
+    "name": "Emery Brooks",
+    "fragments": [
+      "Drops a sibling at school before catching a train.",
+      "Studies nursing near a hospital campus.",
+      "Works casual shifts in aged care on weekends.",
+      "Mentions being careful with petrol costs.",
+      "Shops at a large suburban mall after practical classes.",
+      "Leaves home before sunrise on placement days.",
+      "Uses meal prep containers to save money.",
+      "Receives roster changes through a workplace app.",
+      "Often studies anatomy notes on the train.",
+      "Avoids late-night shifts before exams.",
+      "Keeps vaccination records ready for placement.",
+      "Uses a shared family car twice a week.",
+      "Buys uniforms from a campus supplier.",
+      "Takes calls outside because the house is noisy.",
+      "Plans holidays around unpaid placement blocks."
+    ]
+  },
+  {
+    "id": "P06",
+    "name": "Finley Rivera",
+    "fragments": [
+      "Runs a small online store from a spare room.",
+      "Posts parcels at the same post office most afternoons.",
+      "Mentions school pickup at 3:15 pm.",
+      "Buys packaging materials in bulk.",
+      "Checks supplier prices late at night.",
+      "Uses a home Wi-Fi printer for shipping labels.",
+      "Tracks business income separately from household spending.",
+      "Usually drives to a warehouse district on Fridays.",
+      "Keeps customer addresses in an encrypted spreadsheet.",
+      "Avoids listing their home suburb on public profiles.",
+      "Receives marketplace messages during dinner.",
+      "Uses a tablet to photograph products near a window.",
+      "Books tax appointments near the end of quarter.",
+      "Mentions cash flow being seasonal.",
+      "Schedules social posts before school holidays."
+    ]
+  },
+  {
+    "id": "P07",
+    "name": "Gray Taylor",
+    "fragments": [
+      "Works from a university research lab four days a week.",
+      "Takes a bus from a high-density apartment area.",
+      "Buys lunch from campus food courts.",
+      "Mentions grant deadlines and conference submissions.",
+      "Leaves the lab late when experiments overrun.",
+      "Uses building access after normal office hours.",
+      "Separates research data from personal cloud storage.",
+      "Orders electronics parts to a campus mailroom.",
+      "Usually exercises at a pool before work.",
+      "Travels interstate for workshops twice a year.",
+      "Uses a password manager for lab accounts.",
+      "Prefers not to publish precise travel dates.",
+      "Attends seminars near engineering buildings.",
+      "Has a fixed-term contract.",
+      "Tracks expenses carefully during grant gaps."
+    ]
+  },
+  {
+    "id": "P08",
+    "name": "Harper Singh",
+    "fragments": [
+      "Works as a barista before morning classes.",
+      "Studies media production near a creative arts campus.",
+      "Carries camera equipment on public transport.",
+      "Often edits videos in a library until closing.",
+      "Mentions rent stress near assessment deadlines.",
+      "Uses second-hand marketplaces for equipment.",
+      "Goes to live music venues on Friday nights.",
+      "Usually takes the last train home.",
+      "Keeps social media accounts public for portfolio work.",
+      "Avoids revealing home location in captions.",
+      "Buys groceries from a market near a train line.",
+      "Uses a prepaid phone plan.",
+      "Shares a studio booking calendar with classmates.",
+      "Receives casual shift offers by text.",
+      "Travels to beach shoots before sunrise."
+    ]
+  },
+  {
+    "id": "P09",
+    "name": "Indigo Walsh",
+    "fragments": [
+      "Commuters see this person reading medical textbooks.",
+      "Works part-time at a pharmacy near a railway station.",
+      "Studies for entrance exams in the evenings.",
+      "Mentions living with grandparents.",
+      "Walks a dog in a park before breakfast.",
+      "Buys discounted groceries after 8 pm.",
+      "Uses a shared household computer for printing.",
+      "Avoids online banking on public Wi-Fi.",
+      "Plans study blocks around medication deliveries.",
+      "Has a regular appointment near a clinic district.",
+      "Keeps personal notes in paper notebooks.",
+      "Travels to a coastal suburb on Sundays.",
+      "Uses library computers for practice exams.",
+      "Saves money for application fees.",
+      "Turns phone location off during walks."
+    ]
+  },
+  {
+    "id": "P10",
+    "name": "Jordan Kim",
+    "fragments": [
+      "Works in a warehouse on rotating shifts.",
+      "Uses a scooter for short trips to a train station.",
+      "Studies programming through evening bootcamp classes.",
+      "Mentions a goal of moving closer to the city.",
+      "Buys energy drinks before overnight shifts.",
+      "Receives roster alerts at short notice.",
+      "Usually sleeps in the afternoon after night work.",
+      "Keeps emergency savings in a separate account.",
+      "Orders cheap meal deals through an app.",
+      "Visits a community sports centre on Sundays.",
+      "Shares a rental with relatives.",
+      "Avoids posting workplace photos online.",
+      "Uses a library room for video interviews.",
+      "Tracks fuel costs weekly.",
+      "Prefers job ads with predictable schedules."
+    ]
+  }
+]
+
