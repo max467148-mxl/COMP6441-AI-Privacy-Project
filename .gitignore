@@ -6,5 +6,6 @@ results/*.jsonl
 results/*.csv
 results/*.png
 results/*.md
+results/manual_prompts/
+results/manual_responses/
 !results/.gitkeep
-

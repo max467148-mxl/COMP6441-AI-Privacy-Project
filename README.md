@@ -39,6 +39,34 @@ py -3 -m analysis.analyze_results --input results/raw_results.jsonl
 
 Start with `--limit-profiles 2` so you can inspect the outputs before running the full experiment.
 
+## Manual ChatGPT Run Without API Billing
+
+If you only have ChatGPT Plus and do not want separate API billing, export prompts and answer them manually in ChatGPT:
+
+```powershell
+py -3 -m src.manual_experiment export --limit-profiles 3
+```
+
+This creates:
+
+- `results/manual_prompts/`: prompts to copy into ChatGPT.
+- `results/manual_responses/`: response files where you paste ChatGPT answers.
+- `results/manual_tracking.csv`: progress sheet.
+- `results/manual_instructions.md`: step-by-step instructions.
+
+After filling the response files:
+
+```powershell
+py -3 -m src.manual_experiment collect
+py -3 -m analysis.analyze_results --input results/manual_raw_results.jsonl
+```
+
+For a manageable high-quality report, start with `--limit-profiles 3`. That creates 240 prompts if all mitigations are included, which is substantial. For a smaller pilot, use one mitigation:
+
+```powershell
+py -3 -m src.manual_experiment export --limit-profiles 3 --mitigations none
+```
+
 ## Outputs
 
 - `results/raw_results.jsonl`: prompts, responses, condition, model, timestamp.
