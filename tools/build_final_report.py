@@ -119,7 +119,7 @@ def add_table(doc, rows):
     if len(rows[0]) == 3:
         weights = [2.2, 1.2, 3.3]
     elif len(rows[0]) == 4:
-        weights = [2.7, 0.7, 1.1, 1.4]
+        weights = [0.9, 2.3, 1.0, 3.2] if rows[0][0].strip() == "Date" else [2.7, 0.7, 1.1, 1.4]
     total = sum(weights)
     for r_index, values in enumerate(rows):
         cells = table.rows[0].cells if r_index == 0 else table.add_row().cells
@@ -293,10 +293,13 @@ def build():
             add_table(doc, rows)
             continue
         if line.startswith("### "):
-            doc.add_heading(line[4:], level=2)
+            title = line[4:]
+            if title.startswith("3.3 Original proposal"):
+                doc.add_page_break()
+            doc.add_heading(title, level=2)
         elif line.startswith("## "):
             title = line[3:]
-            if title in {"References", "Appendix A. Evidence Map"}:
+            if title in {"Appendix A. Evidence Map"}:
                 doc.add_page_break()
             doc.add_heading(title, level=1)
         elif re.match(r"^\d+\. ", line):

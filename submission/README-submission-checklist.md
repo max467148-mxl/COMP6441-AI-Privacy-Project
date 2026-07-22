@@ -2,7 +2,7 @@
 
 ## Ready Artefacts
 
-- `Report-z5557885.docx` — editable 13-page formal report.
+- `Report-z5557885.docx` — editable 15-page formal report.
 - `Report-z5557885.pdf` — required submission PDF after final render verification.
 - `Presentation-z5557885.pptx` — six-slide, five-minute presentation.
 - `Presentation-script-z5557885.md` — timed speaking script.
@@ -17,7 +17,9 @@
 - Confirm the course's current AI-use declaration rules and submit the declaration in the required location.
 - Verify that the reconstructed work-diary estimates reasonably match the actual personal time and correct them where necessary.
 - Rehearse once with a timer and shorten pauses if the talk exceeds five minutes.
-- Upload `Report-[zID].pdf`, the PPTX if required, and a repository/evidence link according to the course submission page.
+- Upload the evidence package to GitHub or OneDrive, verify tutor access, then add the real URL to the report. No public remote is currently configured.
+- Create a final submission commit and tag such as `COMP6441-final-submission` after adding the access URL; do not modify that tag after the deadline.
+- Upload `Report-z5557885.pdf`, the PPTX if required, and the repository/evidence link according to the course submission page.
 
 ## Integrity Notes
 

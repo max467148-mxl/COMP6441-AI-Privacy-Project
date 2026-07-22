@@ -34,6 +34,8 @@ Several different privacy threats are sometimes grouped under the label “LLM p
 
 Here, all source fragments are deliberately supplied in the current prompt. The question is whether context aggregation transforms them into a sensitive inference that was not directly stated. This is closer to attribute inference and profile reconstruction. Staab et al. (2024) showed that language models can infer personal attributes from apparently ordinary text and found that common anonymisation and alignment measures did not reliably remove the risk. Their work motivates a narrower systems question: how much does the application's context policy contribute to that capability?
 
+In this report, **sensitive** means privacy-relevant or potentially exploitable inferred information. It does not mean that every tested attribute is “special-category personal data” under the narrower legal definition in GDPR Article 9. A routine or likely absence window can create security risk without belonging to a legally enumerated special category.
+
 ### 2.2 Data minimisation and purpose limitation
 
 Article 5 of the EU General Data Protection Regulation states principles of purpose limitation, data minimisation and storage limitation (European Parliament and Council, 2016). Even where a fragment was legitimately collected, reusing it for unrelated inference may exceed the original purpose. Collecting or retaining every interaction “just in case” also increases the available attack surface.
@@ -62,6 +64,17 @@ Five stages form the data flow: synthetic fragments, context selection, prompt c
 
 The experiment excludes exact-address prediction and real-person identification. It measures broad inference because broad results can still have security consequences: targeting a residence, tailoring social engineering, discriminating by perceived financial status, or monitoring work and study routines.
 
+### 3.3 Original proposal compared with the final outcome
+
+Scope reduction was treated as a methodological trade-off rather than as an unreported failure. The core research objective remained unchanged, while the execution plan was narrowed to improve isolation and traceability.
+
+| Original proposal | Final outcome | Reason for change |
+|---|---|---|
+| Test privacy risk from AI context aggregation | Completed with 90 controlled trials | Core objective retained |
+| Use a larger synthetic-profile set | Three profiles used in the formal run | Allowed every prompt and response to be preserved and checked consistently |
+| Compare several mitigation ideas | Two mitigations tested under the same full-context baseline | Avoided confounding and kept the formal run feasible |
+| Automate model calls through an API | Manual Temporary Chat collection with automated generation, collection, scoring and analysis | No paid API key was available; separate chats also reduced cross-trial contamination |
+
 ## 4. Methodology
 
 ### 4.1 Experimental design
@@ -86,6 +99,8 @@ Four baseline context conditions changed only the fragments supplied:
 | Compartmentalised memory | 5 selected fragments | Restricted subset intended to represent a context compartment |
 
 For each of three profiles, the four conditions were crossed with the five questions, producing 60 baseline prompts. Two further mitigations were evaluated only under full aggregated context: replacing exact time/place expressions with broader wording, and adding an instruction warning the model not to make unsupported sensitive inferences. This added 30 prompts, for 90 total. Restricting mitigation comparisons to the same full-context baseline avoids confounding mitigation with context size.
+
+The implemented compartment was deterministic and query-aligned. For each question category, the generator ranked the profile's fragments by the number of matches against a predefined category-keyword list and selected the top five. This produced a reproducible subset, but it also favoured semantically correlated evidence. The experiment therefore evaluates one keyword-ranked compartment design, not compartmentalisation as a general security control.
 
 ### 4.2 Controlled execution
 
@@ -126,13 +141,26 @@ The clearest result is the change across context conditions. With one fragment, 
 
 This pattern answers RQ1 and RQ2 within the limits of the dataset: additional linked context made sensitive reconstruction both more frequent and more confident. The one-fragment score is not zero because some fragments were already suggestive. For example, a precise recurring bus time can support an absence-from-home inference even without other context. Aggregation nevertheless added a large practical increment.
 
-### 5.2 Weak compartments preserved most of the risk
+### 5.2 Response-level evidence shows what the score represents
+
+P01's occupation question provides a concrete example. Under no memory, the model saw only the recurring 7:42 bus fragment and answered that there might be a work or study commitment, but that a specific occupation or field could not be inferred. It reported 0.35 confidence and set the uncertainty flag. Under full aggregation, it reconstructed a tertiary student with laboratory sessions, evening tutorials, study near Kensington and part-time Saturday retail work, with 0.96 confidence and no uncertainty flag.
+
+| Condition | Available evidence | Preserved response excerpt |
+|---|---|---|
+| No memory | One recurring bus-time fragment | “There is not enough information to infer a specific occupation, employer, school, or field of study.” |
+| Full aggregation | Fifteen transport, campus, class, laboratory, shopping and work fragments | “The person is likely a student... [and] also seem[s] to have part-time retail employment on Saturday afternoons.” |
+
+No single fragment states the complete combined profile. The difference between these two preserved outputs illustrates how aggregation changes an ambiguous routine into a more actionable study-and-work profile.
+
+### 5.3 Weak compartments preserved most of the risk
 
 Compartmentalised prompts supplied only five fragments, but leakage remained 0.93, much closer to full aggregation (0.97) than to the generic limited-memory condition (0.83). This does not show that compartmentalisation is ineffective in principle. It shows that the implemented compartments were too semantically rich: five correlated fragments about study and work can still reconstruct occupation or schedule.
 
 This negative result improves the security conclusion. A control should not be evaluated by its label or by fragment count alone. Effective isolation requires purpose-based boundaries, low cross-compartment linkability and checks on the inferential power of the selected subset. A “study” compartment containing campus location, laboratory timing and transport habits may still disclose both occupation and absence windows.
 
-### 5.3 Activity linking was the easiest target
+The keyword-ranking policy is an important source of this result because it deliberately selects category-relevant fragments. Future work should compare three equal-size designs: random five-fragment subsets, semantically correlated subsets and purpose-based compartments. That comparison would better separate the effect of context volume from the effect of linkability.
+
+### 5.4 Activity linking was the easiest target
 
 [[FIGURE:category]]
 
@@ -140,7 +168,7 @@ Across baseline conditions, activity-linking questions had the highest mean leak
 
 The category ranking should not be treated as a universal hierarchy. It reflects the synthetic fragments and ground truth used here. It does, however, illustrate why linkability is a useful leading indicator: once the model explicitly connects transport, shopping, study and exercise records, more specific inferences become easier to justify.
 
-### 5.4 Simple mitigations produced little or no reduction
+### 5.5 Simple mitigations produced little or no reduction
 
 [[FIGURE:mitigation]]
 
@@ -150,7 +178,9 @@ The category ranking should not be treated as a universal hierarchy. It reflects
 | Generalise exact time/place | 15 | 0.93 | 0.84 | 0.0% |
 | Sensitive-inference warning | 15 | 0.97 | 0.80 | 0.0% |
 
-Generalising exact details reduced leakage by only 0.04. The broader routine and combination of activities still supported most expected attributes. The warning instruction produced no reduction in leakage. It lowered mean reported confidence by approximately 0.03, but answers continued to state sensitive conclusions with cautious wording.
+Generalising exact details reduced measured attribute leakage by only 0.04. The broader routine and combination of activities still supported most expected attributes. However, this metric does not measure disclosure precision. In P01's residential question, the unmitigated response inferred a shared student rental in “Sydney's eastern suburbs,” while the generalised response gave only a “well-connected urban or inner-suburban area” with possible coastal access. Both reconstruct a residential context and can receive the same attribute score even though the second is less geographically specific.
+
+The warning instruction produced no reduction in leakage. It lowered mean reported confidence by approximately 0.03, but answers continued to state sensitive conclusions with cautious wording. The correct interpretation is therefore that generalisation had little effect on **attribute-presence leakage as measured here**; the experiment cannot conclude that it had no effect on disclosure specificity.
 
 This answers RQ3 negatively for the controls as implemented. Superficial redaction and prompt-only policy do not remove the underlying information structure. The result is consistent with a security principle: once an over-privileged component receives the data, asking it to behave cautiously is weaker than preventing unnecessary data from crossing the boundary.
 
@@ -181,13 +211,13 @@ The browser incident also affected the workflow. Rather than discarding the run,
 
 ## 7. Limitations and Validity
 
-**Construct validity.** The expected-term rubric approximates sensitive reconstruction but cannot fully judge semantic equivalence, quality of evidence or appropriateness of uncertainty. A blinded second human coder and inter-rater agreement would strengthen future work.
+**Construct validity.** The expected-term rubric approximates whether a sensitive attribute was reconstructed but cannot fully judge semantic equivalence, quality of evidence or appropriateness of uncertainty. More importantly, it does not distinguish a broad region from a precise neighbourhood. A mitigation can therefore lower disclosure specificity without lowering the current score. Future evaluation should report two dimensions: attribute disclosure and an ordinal specificity score, for example 0 for no inference, 1 for very broad, 2 for moderately specific and 3 for highly specific. A blinded second human coder and inter-rater agreement would strengthen both measures.
 
 **Internal validity.** Prompt templates were held constant and trials were isolated, but a proprietary web interface does not expose all model settings. The privacy framing and required JSON schema may influence response behaviour. Temporary Chat reduces personalisation memory but does not prove that the service has no other safety context.
 
 **External validity.** Three synthetic profiles, five questions and one interface mode are too small for generalisation across populations, providers or languages. Profiles intentionally contain enough structure to support analysis and may be more coherent than real data. No statistical significance or effect-size generalisation is claimed.
 
-**Mitigation validity.** The tested compartments and redactions are simple implementations. Their weak performance does not invalidate mature purpose-based isolation, differential privacy, secure retrieval design or retention controls. It shows that controls need adversarial evaluation rather than nominal adoption.
+**Mitigation validity.** The tested compartments and redactions are simple implementations. The compartment condition uses one category-keyword ranking policy, so its result cannot be generalised to random, purpose-based or cross-purpose compartment designs. Their weak performance does not invalidate mature purpose-based isolation, differential privacy, secure retrieval design or retention controls. It shows that controls need adversarial evaluation rather than nominal adoption.
 
 **Ethics and harm.** Broad absence and residential inferences can be misused even without exact identifiers. The report therefore avoids publishing any real-person data and keeps all examples synthetic. The same method should not be applied to a real individual without lawful authority, consent and an ethics review.
 
@@ -239,6 +269,8 @@ Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1
 | Prompt generation and scoring | `src/manual_experiment.py` and `scoring/score.py` |
 | Regression tests | `tests/test_manual_experiment.py` and `tests/test_scoring.py` |
 
+The local repository had no configured public remote when this report was generated. Before submission, the evidence package must be uploaded to an accessible GitHub or OneDrive location, the tutor's permissions must be verified, and that URL must be added to the submitted report. The final commit hash and a fixed submission tag should be recorded after the access link is added.
+
 ## Appendix B. Reproduction Commands
 
 ```text
@@ -249,3 +281,20 @@ py -3 -m unittest discover -s tests -v
 ```
 
 The first command regenerates the controlled prompt set. The collection step imports the response files listed in the tracking sheet. The analysis command recreates the scored CSV, summary and figures. Exact paths used for the submitted run are preserved in the repository.
+
+## Appendix C. Project Work Log
+
+The following is a reconstructed estimate based on Git history, the formal tracking sheet and the completed artefacts. It provides approximately 30 hours of independent-project evidence; the student must correct any entry that does not reasonably match the time actually spent.
+
+| Date | Activity | Approx. hours | Supporting evidence |
+|---|---|---:|---|
+| 15 July | Problem definition and project scaffold | 3.0 | Commit `34099cf`; `data/`, `src/` and initial documentation |
+| 15 July | Literature review, ethics and threat model | 4.0 | Commit `ca11e39`; background, ethics and threat-model drafts |
+| 15 July | Prompt export, tracking and collection workflow | 4.0 | Commit `ca77fe2`; `src/manual_experiment.py` |
+| 22 July | Formal design and automated tests | 3.0 | 90-prompt design; experiment and scoring tests |
+| 22 July | Collection of 90 isolated responses | 7.0 | Tracking CSV, raw responses and Temporary Chat screenshots |
+| 22 July | Browser incident handling and procedure log | 0.5 | `evidence/formal_experiment_log.md` |
+| 22 July | Scoring correction, regression test and rescore | 2.5 | `scoring/score.py`; corrected analysis records |
+| 22 July | Statistical summaries and visualisation | 2.5 | Analysis script, metric CSV files and three figures |
+| 22 July | Report, presentation and visual QA | 3.5 | DOCX, PDF, PPTX, script and rendered QA evidence |
+|  | **Total** | **30.0** | |

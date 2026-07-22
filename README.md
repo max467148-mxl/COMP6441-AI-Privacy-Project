@@ -1,80 +1,70 @@
 # When Harmless Fragments Become Sensitive
 
-Measuring privacy leakage through AI context aggregation.
+This COMP6441 independent cybersecurity project measures inference-based privacy leakage when an AI system aggregates individually low-sensitivity context fragments. All profiles are synthetic; the project does not identify or test real people.
 
-This is a reproducible cybersecurity experiment about inference-based privacy leakage. It uses synthetic user profiles only. The project measures how much sensitive information an AI system can infer when individually low-sensitivity fragments are retained and combined.
+## Formal Study
 
-## Research Questions
+The completed study contains 90 isolated ChatGPT trials:
 
-1. To what extent can an AI system infer private information by combining individually non-sensitive data fragments?
-2. How does retained context affect privacy-sensitive inference rate and confidence?
-3. Which simple controls reduce inference-based leakage most effectively?
+- 3 synthetic profiles.
+- 5 standardised privacy-inference questions.
+- 60 baseline trials across four context conditions.
+- 30 mitigation trials under full aggregated context.
+- A new Temporary Chat for every prompt.
+- The first completed response preserved without editing.
 
-## Setup
+The interface displayed ChatGPT Plus in High mode but did not expose an exact model identifier.
+
+## Main Results
+
+| Treatment | Mean leakage score |
+|---|---:|
+| No memory | 0.53 |
+| Limited memory | 0.83 |
+| Full aggregated memory | 0.97 |
+| Implemented keyword-ranked compartment | 0.93 |
+| Full context with exact time/place generalised | 0.93 |
+| Full context with sensitive-inference warning | 0.97 |
+
+These are descriptive results from a transparent expected-term scorer. The metric measures attribute reconstruction, not disclosure specificity; the final report discusses this construct-validity limitation.
+
+## Evidence Map
+
+- `results/formal_prompts/`: exact submitted prompts.
+- `results/formal_responses/`: unedited copied responses.
+- `results/formal_raw_results.jsonl`: machine-readable formal records.
+- `results/formal_tracking.csv`: completion status for all 90 trials.
+- `results/formal_analysis/`: corrected scores, metrics and figures.
+- `evidence/formal_experiment_log.md`: procedure, browser incident and scoring correction.
+- `evidence/screenshots/`: beginning and end Temporary Chat evidence.
+- `evidence/work_diary.md`: reconstructed 30-hour activity log with artefact references.
+- `submission/`: final report, presentation, script and checklist.
+
+## Reproduction
+
+Install dependencies:
 
 ```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
 py -3 -m pip install -r requirements.txt
 ```
 
-## Dry Run
-
-Dry-run mode creates reproducible placeholder responses. It is useful for checking the pipeline before spending API credits.
+Regenerate the formal prompt design and run tests:
 
 ```powershell
-py -3 -m unittest discover -s tests
-py -3 -m src.run_experiment --dry-run
-py -3 -m analysis.analyze_results --input results/raw_results.jsonl
+py -3 -m src.manual_experiment export --design formal90
+py -3 -m unittest discover -s tests -v
 ```
 
-## Real Model Run
-
-Create `.env` from `.env.example`, add an API key, and run:
+After response files have been populated, collect and analyse them:
 
 ```powershell
-py -3 -m src.run_experiment --provider openai --limit-profiles 2
-py -3 -m analysis.analyze_results --input results/raw_results.jsonl
+py -3 -m src.manual_experiment collect --tracking results/formal_tracking.csv
+py -3 -m analysis.analyze_results results/formal_raw_results.jsonl --output-dir results/formal_analysis
 ```
 
-Start with `--limit-profiles 2` so you can inspect the outputs before running the full experiment.
+## Submission Integrity
 
-## Manual ChatGPT Run Without API Billing
-
-If you only have ChatGPT Plus and do not want separate API billing, export prompts and answer them manually in ChatGPT:
-
-```powershell
-py -3 -m src.manual_experiment export --limit-profiles 3
-```
-
-This creates:
-
-- `results/manual_prompts/`: prompts to copy into ChatGPT.
-- `results/manual_responses/`: response files where you paste ChatGPT answers.
-- `results/manual_tracking.csv`: progress sheet.
-- `results/manual_instructions.md`: step-by-step instructions.
-
-After filling the response files:
-
-```powershell
-py -3 -m src.manual_experiment collect
-py -3 -m analysis.analyze_results --input results/manual_raw_results.jsonl
-```
-
-For a manageable high-quality report, start with `--limit-profiles 3`. That creates 240 prompts if all mitigations are included, which is substantial. For a smaller pilot, use one mitigation:
-
-```powershell
-py -3 -m src.manual_experiment export --limit-profiles 3 --mitigations none
-```
-
-## Outputs
-
-- `results/raw_results.jsonl`: prompts, responses, condition, model, timestamp.
-- `results/scored_results.csv`: scored results.
-- `results/leakage_by_condition.png`: leakage rate by context condition.
-- `results/leakage_by_category.png`: leakage rate by attribute category.
-- `results/mitigation_comparison.png`: mitigation comparison.
-
-## Academic Integrity Notes
-
-Do not submit dry-run outputs as final experiment evidence. Real results should come from a documented model run, with raw logs, screenshots, and a work diary. The report must acknowledge AI assistance and explain what you personally checked and understood.
+- Dry-run outputs are not used as formal evidence.
+- The project reports inference-based privacy leakage, not a confirmed production data breach.
+- Generative AI assistance is disclosed in the report.
+- The repository should be uploaded to an accessible GitHub or OneDrive location before submission, tutor access should be verified, and the final commit/tag should remain unchanged after the deadline.
