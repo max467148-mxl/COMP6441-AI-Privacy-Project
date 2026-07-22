@@ -67,4 +67,5 @@ py -3 -m analysis.analyze_results results/formal_raw_results.jsonl --output-dir 
 - Dry-run outputs are not used as formal evidence.
 - The project reports inference-based privacy leakage, not a confirmed production data breach.
 - Generative AI assistance is disclosed in the report.
-- The repository should be uploaded to an accessible GitHub or OneDrive location before submission, tutor access should be verified, and the final commit/tag should remain unchanged after the deadline.
+- Public repository: https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project
+- The submitted snapshot is marked by the immutable tag `COMP6441-final-submission`; it should remain unchanged after the deadline.

@@ -39,15 +39,21 @@ def set_repeat_table_header(row):
 
 def add_page_number(paragraph):
     paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    run = paragraph.add_run("Page ")
+    paragraph.add_run("Page ")
     begin = OxmlElement("w:fldChar")
     begin.set(qn("w:fldCharType"), "begin")
+    paragraph.add_run()._r.append(begin)
     instr = OxmlElement("w:instrText")
     instr.set(qn("xml:space"), "preserve")
-    instr.text = "PAGE"
+    instr.text = " PAGE "
+    paragraph.add_run()._r.append(instr)
+    separate = OxmlElement("w:fldChar")
+    separate.set(qn("w:fldCharType"), "separate")
+    paragraph.add_run()._r.append(separate)
+    paragraph.add_run("1")
     end = OxmlElement("w:fldChar")
     end.set(qn("w:fldCharType"), "end")
-    run._r.extend([begin, instr, end])
+    paragraph.add_run()._r.append(end)
 
 
 def configure(doc):
@@ -55,7 +61,7 @@ def configure(doc):
     section.page_width = Inches(8.5)
     section.page_height = Inches(11)
     section.top_margin = Inches(0.82)
-    section.bottom_margin = Inches(0.75)
+    section.bottom_margin = Inches(0.95)
     section.left_margin = Inches(0.88)
     section.right_margin = Inches(0.88)
     section.header_distance = Inches(0.35)
@@ -183,12 +189,21 @@ def build_threat_model():
     return path
 
 
+def normalise_chart(source, name):
+    """Strip alpha metadata that can break headless office PDF export."""
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    path = ASSETS / name
+    with Image.open(source) as image:
+        image.convert("RGB").save(path)
+    return path
+
+
 def add_figure(doc, key, number):
     paths = {
         "threat_model": build_threat_model(),
-        "condition": ROOT / "results" / "formal_analysis" / "leakage_by_condition.png",
-        "category": ROOT / "results" / "formal_analysis" / "leakage_by_category.png",
-        "mitigation": ROOT / "results" / "formal_analysis" / "mitigation_comparison.png",
+        "condition": normalise_chart(ROOT / "results" / "formal_analysis" / "leakage_by_condition.png", "leakage_by_condition.png"),
+        "category": normalise_chart(ROOT / "results" / "formal_analysis" / "leakage_by_category.png", "leakage_by_category.png"),
+        "mitigation": normalise_chart(ROOT / "results" / "formal_analysis" / "mitigation_comparison.png", "mitigation_comparison.png"),
     }
     captions = {
         "threat_model": "Threat model and privacy-relevant trust boundaries.",

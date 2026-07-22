@@ -269,7 +269,7 @@ Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1
 | Prompt generation and scoring | `src/manual_experiment.py` and `scoring/score.py` |
 | Regression tests | `tests/test_manual_experiment.py` and `tests/test_scoring.py` |
 
-The local repository had no configured public remote when this report was generated. Before submission, the evidence package must be uploaded to an accessible GitHub or OneDrive location, the tutor's permissions must be verified, and that URL must be added to the submitted report. The final commit hash and a fixed submission tag should be recorded after the access link is added.
+The complete project repository and evidence package are publicly accessible at https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project. The submitted snapshot is identified by the fixed Git tag `COMP6441-final-submission`, allowing the tutor to inspect the source files, formal prompts and responses, analysis outputs, report artefacts and development history used for this submission.
 
 ## Appendix B. Reproduction Commands
 
