@@ -11,9 +11,9 @@ from docx.shared import Inches, Pt, RGBColor
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "docs" / "Report-zXXXXXXX-final.md"
+SOURCE = ROOT / "docs" / "Report-z5557885-final.md"
 SUBMISSION = ROOT / "submission"
-OUT = SUBMISSION / "Report-zXXXXXXX.docx"
+OUT = SUBMISSION / "Report-z5557885.docx"
 ASSETS = ROOT / "docs" / "generated_assets"
 
 BLUE = "235789"
@@ -232,7 +232,7 @@ def add_cover(doc):
     details = doc.add_paragraph()
     details.alignment = WD_ALIGN_PARAGRAPH.CENTER
     details.paragraph_format.space_before = Pt(36)
-    add_inline(details, "**Xiaolong Ma**\nzXXXXXXX\n22 July 2026")
+    add_inline(details, "**Xiaolong Ma**\nz5557885\n22 July 2026")
     note = doc.add_paragraph()
     note.alignment = WD_ALIGN_PARAGRAPH.CENTER
     note.paragraph_format.space_before = Pt(44)

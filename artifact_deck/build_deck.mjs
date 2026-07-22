@@ -86,7 +86,7 @@ async function main() {
       shape(s, `fragment-${i}-panel`, "rect", x, y, 180, 72, i === 5 ? C.cyan : C.panel);
       text(s, `fragment-${i}`, f, x + 14, y + 23, 152, 28, 17, { bold: i === 5 });
     });
-    text(s, "cover-meta", "Xiaolong Ma  |  zXXXXXXX  |  90 controlled prompts", 52, 632, 720, 28, 16, { color: C.muted });
+    text(s, "cover-meta", "Xiaolong Ma  |  z5557885  |  90 controlled prompts", 52, 632, 720, 28, 16, { color: C.muted });
     text(s, "cover-takeaway", "The combination reveals more than any single item.", 820, 525, 385, 64, 24, { bold: true, color: C.blue });
   }
 
@@ -223,7 +223,7 @@ async function main() {
   const snapshot = await deck.inspect({ kind: "slide,textbox,shape,image,chart", maxChars: 30000 });
   await fs.writeFile(path.join(QA, "deck-inspect.ndjson"), snapshot.ndjson, "utf8");
   const pptx = await PresentationFile.exportPptx(deck);
-  await pptx.save(path.join(OUT, "Presentation-zXXXXXXX.pptx"));
+  await pptx.save(path.join(OUT, "Presentation-z5557885.pptx"));
 }
 
 main().catch((error) => {
