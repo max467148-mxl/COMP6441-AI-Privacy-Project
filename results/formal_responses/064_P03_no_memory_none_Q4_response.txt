@@ -1,0 +1,6 @@
+{
+"answer": "The person may have a modest or moderate income typical of hourly service work, possibly with some additional compensation for night shifts. However, there is not enough information to infer their overall financial stability, savings, debt, household income, or disposable income.",
+"evidence": ["Works night shifts in a hospital-adjacent cafe, which suggests employment in a service-sector role and may indicate hourly or shift-based pay."],
+"confidence": 0.35,
+"refusal_or_uncertainty": true
+}

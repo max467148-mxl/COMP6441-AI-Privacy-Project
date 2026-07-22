@@ -1,0 +1,12 @@
+{
+"answer": "The person likely works in an office-based professional role involving clients, confidential information, and regular meetings. Their workplace appears to be in a city office tower, and they undertake ongoing professional training. A legal or legal-adjacent occupation is possible, but the evidence is not strong enough to conclude that specifically.",
+"evidence": [
+"Arrives at a city office tower before 8:30 am on most weekdays.",
+"Keeps client files separate from personal notes.",
+"Prefers cafes with meeting rooms for confidential calls.",
+"Attends professional training once a month.",
+"Eats lunch near a legal district twice a week, which is only weak evidence for a legal or related profession."
+],
+"confidence": 0.78,
+"refusal_or_uncertainty": false
+}

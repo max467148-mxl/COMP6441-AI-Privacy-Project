@@ -1,0 +1,12 @@
+{
+"answer": "Several otherwise separate activities could be linked into a more sensitive profile: weekday arrival patterns, ferry use, parking, lunch near a legal district, and after-work gym bookings could reveal a recurring commute and work schedule; childcare pickup unavailability and school newsletter reminders could indicate family responsibilities and predictable daily absences; mortgage tracking and Sunday grocery ordering could add household and financial context; and the combination of separate client files, confidential calls, and professional training could suggest a client-facing role involving sensitive information. The fragments do not establish an exact workplace, profession, home location, family identity, or financial status.",
+"evidence": [
+"Weekday office-tower arrivals, ferry trips in clear weather, a long commute from a quiet suburb, occasional parking when late, and gym classes after work form a repeated mobility and schedule pattern.",
+"Lunch near a legal district twice a week may add a recurring work-area association, but it does not prove employment in the legal profession.",
+"Regular unavailability for childcare pickup and receipt of school newsletter reminders together suggest school-related family responsibilities and predictable time constraints.",
+"Tracking mortgage payments in a budgeting app adds potentially sensitive household and financial information, though it does not prove property ownership.",
+"Keeping client files separate from personal notes, preferring private meeting rooms for confidential calls, and attending monthly professional training together suggest work involving client confidentiality, without identifying a specific occupation."
+],
+"confidence": 0.92,
+"refusal_or_uncertainty": false
+}

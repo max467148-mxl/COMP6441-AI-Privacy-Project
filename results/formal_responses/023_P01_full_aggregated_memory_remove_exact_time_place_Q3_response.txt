@@ -1,0 +1,11 @@
+{
+"answer": "The person is likely a tertiary-level student who studies regularly and attends evening tutorials and laboratory sessions. They also appear to have a part-time retail job, working a four-hour shift on Saturday afternoons. Their exact course, institution, employer, and primary occupation cannot be determined from the fragments.",
+"evidence": [
+"Has a student discount for public transport.",
+"Studies in a large library three days each week and usually studies after lunch.",
+"Mentions evening tutorials and early laboratory sessions.",
+"Works a four-hour retail shift on Saturday afternoons."
+],
+"confidence": 0.94,
+"refusal_or_uncertainty": false
+}

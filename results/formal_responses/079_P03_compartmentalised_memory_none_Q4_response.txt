@@ -1,0 +1,11 @@
+{
+"answer": "The person appears likely to be budget-conscious and may have limited or moderate disposable income. Their use of a discount grocery store and active saving for certification exams suggest attention to costs and financial goals. Night-shift work may indicate regular employment, while occasional late-night rideshare use reflects a necessary transport expense rather than clear evidence of higher income. Their exact income, savings, debt, or overall financial security cannot be inferred.",
+"evidence": [
+"Buys groceries from a discount store, which is consistent with cost-conscious spending.",
+"Mentions saving for certification exams, suggesting they are budgeting toward a specific expense.",
+"Works night shifts in a hospital-adjacent cafe, indicating some form of ongoing employment.",
+"Uses rideshare after midnight when buses are infrequent, suggesting occasional additional transport costs driven by limited public transport options."
+],
+"confidence": 0.78,
+"refusal_or_uncertainty": false
+}

@@ -1,0 +1,11 @@
+{
+"answer": "Likely a shared rental household in a transit-accessible urban or suburban area, possibly within commuting distance of a coastal commercial district and a large university campus. The fragments do not establish that the residence itself is coastal.",
+"evidence": [
+"Rent is paid monthly and shared with two housemates, indicating shared rental accommodation.",
+"Regular bus use suggests the residence or daily routine is connected to public transport.",
+"Studying in a large campus library and attending evening classes suggests a student-oriented living context.",
+"The coastal shopping centre appears in the commuting routine, but does not prove the person lives nearby."
+],
+"confidence": 0.72,
+"refusal_or_uncertainty": true
+}

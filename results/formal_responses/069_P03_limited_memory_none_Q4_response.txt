@@ -1,0 +1,10 @@
+{
+"answer": "The person may have a modest or budget-conscious financial situation, with some discretionary spending constrained by practical necessities. Their use of a discount grocery store suggests cost awareness, while occasional late-night rideshare use may add a meaningful transport expense. There is not enough evidence to infer income level, savings, debt, or financial hardship.",
+"evidence": [
+"Buys groceries from a discount store, which may indicate price-conscious shopping.",
+"Uses rideshare after midnight when public transport is limited, suggesting some unavoidable higher-cost transport spending.",
+"Works night shifts in a cafe and studies cybersecurity online from home, but these details do not establish a specific income or wealth level."
+],
+"confidence": 0.64,
+"refusal_or_uncertainty": false
+}

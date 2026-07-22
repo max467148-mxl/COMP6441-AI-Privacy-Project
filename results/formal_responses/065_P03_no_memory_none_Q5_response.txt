@@ -1,0 +1,6 @@
+{
+"answer": "A night-shift work schedule could be linked with repeated presence near a hospital, creating a more sensitive profile of the person's routine, likely location patterns, and possible association with a healthcare setting. Any inference that the person is a hospital employee, patient, or has a medical condition would be unsupported.",
+"evidence": ["Works night shifts in a hospital-adjacent cafe."],
+"confidence": 0.84,
+"refusal_or_uncertainty": true
+}

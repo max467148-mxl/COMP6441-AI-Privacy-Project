@@ -22,12 +22,21 @@ def parse_args():
     export = sub.add_parser("export", help="Export prompts for manual ChatGPT testing.")
     export.add_argument("--limit-profiles", type=int, default=3)
     export.add_argument(
+        "--design",
+        choices=["cartesian", "formal90"],
+        default="cartesian",
+        help="Use the normal Cartesian export or the 90-prompt formal study design.",
+    )
+    export.add_argument(
         "--mitigations",
         nargs="+",
         default=["none", "remove_exact_time_place", "memory_expiry", "sensitive_inference_warning"],
         help="Mitigations to include.",
     )
     export.add_argument("--output-dir", default=str(MANUAL_DIR))
+    export.add_argument("--responses-dir", default=str(RESPONSES_DIR))
+    export.add_argument("--tracking", default=str(TRACKING_CSV))
+    export.add_argument("--instructions", default=str(RESULTS_DIR / "manual_instructions.md"))
 
     collect = sub.add_parser("collect", help="Collect manually saved responses into JSONL.")
     collect.add_argument("--tracking", default=str(TRACKING_CSV))
@@ -41,55 +50,74 @@ def export_prompts(args):
     RESULTS_DIR.mkdir(exist_ok=True)
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    RESPONSES_DIR.mkdir(parents=True, exist_ok=True)
+    responses_dir = Path(args.responses_dir)
+    responses_dir.mkdir(parents=True, exist_ok=True)
 
     profiles = load_profiles()[: args.limit_profiles]
     questions = load_questions()
     conditions = load_conditions()
     mitigations = load_mitigations()
 
+    if args.design == "formal90":
+        if args.limit_profiles != 3:
+            raise ValueError("The formal90 design requires exactly 3 profiles.")
+        combinations = [(condition_name, "none") for condition_name in conditions]
+        combinations.extend(
+            ("full_aggregated_memory", mitigation_name)
+            for mitigation_name in ["remove_exact_time_place", "sensitive_inference_warning"]
+        )
+    else:
+        combinations = [
+            (condition_name, mitigation_name)
+            for condition_name in conditions
+            for mitigation_name in args.mitigations
+        ]
+
     rows = []
     index = 1
     for profile in profiles:
-        for condition_name, condition in conditions.items():
-            for mitigation_name in args.mitigations:
-                if mitigation_name not in mitigations:
-                    raise ValueError(f"Unknown mitigation: {mitigation_name}")
-                for question in questions:
-                    prompt = build_prompt(profile, condition_name, condition, question, mitigation_name)
-                    prompt_file = f"{index:03d}_{profile['id']}_{condition_name}_{mitigation_name}_{question['id']}.txt"
-                    response_file = prompt_file.replace(".txt", "_response.txt")
-                    (out_dir / prompt_file).write_text(prompt, encoding="utf-8")
-                    (RESPONSES_DIR / response_file).write_text(
-                        "PASTE CHATGPT RESPONSE HERE. Keep the JSON shape if possible.\n",
-                        encoding="utf-8",
-                    )
-                    rows.append(
-                        {
-                            "id": f"{index:03d}",
-                            "profile_id": profile["id"],
-                            "condition": condition_name,
-                            "mitigation": mitigation_name,
-                            "question_id": question["id"],
-                            "category": question["category"],
-                            "prompt_file": str(out_dir / prompt_file),
-                            "response_file": str(RESPONSES_DIR / response_file),
-                            "status": "pending",
-                            "notes": "",
-                        }
-                    )
-                    index += 1
+        for condition_name, mitigation_name in combinations:
+            if mitigation_name not in mitigations:
+                raise ValueError(f"Unknown mitigation: {mitigation_name}")
+            condition = conditions[condition_name]
+            for question in questions:
+                prompt = build_prompt(profile, condition_name, condition, question, mitigation_name)
+                prompt_file = f"{index:03d}_{profile['id']}_{condition_name}_{mitigation_name}_{question['id']}.txt"
+                response_file = prompt_file.replace(".txt", "_response.txt")
+                (out_dir / prompt_file).write_text(prompt, encoding="utf-8")
+                (responses_dir / response_file).write_text(
+                    "PASTE CHATGPT RESPONSE HERE. Keep the JSON shape if possible.\n",
+                    encoding="utf-8",
+                )
+                rows.append(
+                    {
+                        "id": f"{index:03d}",
+                        "profile_id": profile["id"],
+                        "condition": condition_name,
+                        "mitigation": mitigation_name,
+                        "question_id": question["id"],
+                        "category": question["category"],
+                        "prompt_file": str(out_dir / prompt_file),
+                        "response_file": str(responses_dir / response_file),
+                        "status": "pending",
+                        "notes": "",
+                    }
+                )
+                index += 1
 
-    with TRACKING_CSV.open("w", encoding="utf-8", newline="") as f:
+    tracking_csv = Path(args.tracking)
+    tracking_csv.parent.mkdir(parents=True, exist_ok=True)
+    with tracking_csv.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=rows[0].keys())
         writer.writeheader()
         writer.writerows(rows)
 
-    instructions = RESULTS_DIR / "manual_instructions.md"
+    instructions = Path(args.instructions)
+    instructions.parent.mkdir(parents=True, exist_ok=True)
     instructions.write_text(build_instructions(len(rows)), encoding="utf-8")
     print(f"Exported {len(rows)} prompts to {out_dir}")
-    print(f"Tracking sheet: {TRACKING_CSV}")
-    print(f"Response folder: {RESPONSES_DIR}")
+    print(f"Tracking sheet: {tracking_csv}")
+    print(f"Response folder: {responses_dir}")
     print(f"Instructions: {instructions}")
 
 
@@ -195,4 +223,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

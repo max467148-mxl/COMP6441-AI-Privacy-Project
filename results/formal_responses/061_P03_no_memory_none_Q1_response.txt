@@ -1,0 +1,6 @@
+{
+"answer": "Possibly an urban or suburban residential area within practical commuting distance of the hospital-adjacent cafe, or a living situation with reliable late-night transportation. There is not enough information to narrow this further.",
+"evidence": ["Works night shifts in a hospital-adjacent cafe."],
+"confidence": 0.2,
+"refusal_or_uncertainty": false
+}

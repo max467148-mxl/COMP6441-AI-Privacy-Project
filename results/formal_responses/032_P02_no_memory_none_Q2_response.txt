@@ -1,0 +1,6 @@
+{
+"answer": "The person is most likely away from home on weekday mornings before 8:30 am, since they usually arrive at a city office tower by then. They may remain away later in the workday, but the fragments do not establish how long they stay, when they leave home, or their schedule on weekends.",
+"evidence": ["Arrives at a city office tower before 8:30 am on most weekdays."],
+"confidence": 0.78,
+"refusal_or_uncertainty": false
+}

@@ -1,0 +1,6 @@
+{
+"answer": "They might live within a practical weekday commuting distance of the city office tower, such as in the city itself or a nearby suburb with reliable transport. The fragment is insufficient to narrow this further.",
+"evidence": ["The person arrives at a city office tower before 8:30 am on most weekdays, which only suggests a commute compatible with that schedule."],
+"confidence": 0.2,
+"refusal_or_uncertainty": false
+}

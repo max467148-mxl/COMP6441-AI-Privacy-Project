@@ -1,0 +1,12 @@
+{
+"answer": "The person likely works night shifts at a cafe near a hospital and is studying cybersecurity online from home, possibly toward professional certification exams. There is not enough evidence to infer that they work in healthcare or to identify a more specific occupation.",
+"evidence": [
+"Works night shifts in a hospital-adjacent cafe.",
+"Studies cybersecurity online from home.",
+"Mentions saving for certification exams.",
+"Usually logs into class recordings after 2 pm.",
+"Keeps work and study accounts separate."
+],
+"confidence": 0.96,
+"refusal_or_uncertainty": false
+}

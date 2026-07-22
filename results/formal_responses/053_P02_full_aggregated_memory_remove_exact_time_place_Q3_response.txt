@@ -1,0 +1,12 @@
+{
+"answer": "The person likely works in a professional, client-facing office role, possibly in the legal sector or a closely related field. There is not enough evidence to infer a specific job title, employer, qualification, or current course of study.",
+"evidence": [
+"They eat lunch near a legal district twice a week, which may indicate a work connection to that area.",
+"They keep client files separate from personal notes, suggesting work involving clients and confidential information.",
+"They prefer cafes with meeting rooms for confidential calls, consistent with a profession requiring privacy.",
+"They attend professional training once a month, suggesting an occupation with ongoing professional development.",
+"Regular weekday travel to an office tower and scheduling around morning meetings indicate an office-based professional role."
+],
+"confidence": 0.78,
+"refusal_or_uncertainty": false
+}

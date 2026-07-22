@@ -1,0 +1,6 @@
+{
+"answer": "The person appears to work night shifts in the hospitality or food-service sector at a cafe located near a hospital. Their specific role (such as barista, server, or other cafe staff) cannot be determined, and there is no information about their studies or whether they have another occupation.",
+"evidence": ["Works night shifts in a hospital-adjacent cafe."],
+"confidence": 0.9,
+"refusal_or_uncertainty": true
+}

@@ -1,0 +1,9 @@
+{
+"answer": "The person is likely a student, probably attending classes and studying regularly on a large campus. There is not enough evidence to infer any specific job, employer, profession, or work status.",
+"evidence": [
+"Studies in a large campus library three days each week.",
+"Often buys groceries after evening classes from an Asian supermarket."
+],
+"confidence": 0.85,
+"refusal_or_uncertainty": false
+}

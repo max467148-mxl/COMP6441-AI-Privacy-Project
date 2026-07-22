@@ -9,3 +9,16 @@ results/*.md
 results/manual_prompts/
 results/manual_responses/
 !results/.gitkeep
+!results/formal_raw_results.jsonl
+!results/formal_tracking.csv
+!results/formal_instructions.md
+!results/formal_analysis/
+!results/formal_analysis/**
+!results/formal_prompts/
+!results/formal_prompts/**
+!results/formal_responses/
+!results/formal_responses/**
+artifact_deck/node_modules/
+qa/
+submission/*.inspect.ndjson
+~$*.docx

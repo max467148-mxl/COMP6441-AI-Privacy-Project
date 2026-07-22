@@ -1,0 +1,12 @@
+{
+"answer": "The person appears to be relatively budget-conscious, with finances that may be modest or somewhat constrained. The pattern is consistent with a student managing regular living costs carefully, but there is not enough evidence to determine income, savings, debt, or whether they are experiencing financial hardship.",
+"evidence": [
+"Rent is shared with two housemates, which may reduce housing costs.",
+"They use a student discount for public transport.",
+"They buy budget meal kits at the end of the month, suggesting some attention to spending.",
+"They work a four-hour retail shift on Saturday afternoons, indicating at least some part-time employment.",
+"Takeaway is limited to specific occasions, which may reflect cost-conscious habits, though this is not certain."
+],
+"confidence": 0.72,
+"refusal_or_uncertainty": false
+}

@@ -1,0 +1,10 @@
+{
+"answer": "The evidence suggests a relatively stable but budget-conscious financial situation, with an ongoing mortgage obligation. There may be regular employment income, but the fragments do not support a reliable conclusion about wealth, salary level, disposable income, or financial stress.",
+"evidence": [
+"Uses a budgeting app to track mortgage payments.",
+"Regular weekday travel to a city office tower suggests ongoing employment, though income level is unknown.",
+"Pays for parking only when late, which may indicate some attention to discretionary costs."
+],
+"confidence": 0.72,
+"refusal_or_uncertainty": false
+}

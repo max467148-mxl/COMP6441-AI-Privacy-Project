@@ -1,0 +1,6 @@
+{
+"answer": "The person may have a regular morning commitment, such as work or study, that involves commuting by bus. There is not enough information to infer a specific occupation, employer, school, or field of study.",
+"evidence": ["Usually catches the 7:42 bus from a stop near a coastal shopping centre."],
+"confidence": 0.35,
+"refusal_or_uncertainty": true
+}
