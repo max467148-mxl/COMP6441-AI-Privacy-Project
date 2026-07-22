@@ -21,4 +21,6 @@ results/manual_responses/
 artifact_deck/node_modules/
 qa/
 submission/*.inspect.ndjson
+submission/*.zip
+submission/*.bundle
 ~$*.docx
