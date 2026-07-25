@@ -68,4 +68,4 @@ py -3 -m analysis.analyze_results results/formal_raw_results.jsonl --output-dir 
 - The project reports inference-based privacy leakage, not a confirmed production data breach.
 - Generative AI assistance is disclosed in the report.
 - Public repository: https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project
-- The submitted snapshot is marked by the immutable tag `COMP6441-final-submission`; it should remain unchanged after the deadline.
+- The current submitted snapshot is marked by the immutable tag `COMP6441-final-submission-v2`; the earlier `COMP6441-final-submission` tag is retained as a historical snapshot.

@@ -18,7 +18,7 @@
 - Verify that the reconstructed work-diary estimates reasonably match the actual personal time and correct them where necessary.
 - Rehearse once with a timer and shorten pauses if the talk exceeds five minutes.
 - Public GitHub evidence repository created and linked in the report: https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project
-- Final submission commit and fixed tag `COMP6441-final-submission` created after adding the access URL; do not modify that tag after the deadline.
+- Final submission commit and fixed tag `COMP6441-final-submission-v2` created after adding the access URL; the earlier `COMP6441-final-submission` tag remains unchanged.
 - Upload `Report-z5557885.pdf`, the PPTX if required, and the repository/evidence link according to the course submission page.
 
 ## Integrity Notes
