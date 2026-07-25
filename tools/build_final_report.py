@@ -37,6 +37,13 @@ def set_repeat_table_header(row):
     tr_pr.append(repeat)
 
 
+def prevent_table_row_split(row):
+    tr_pr = row._tr.get_or_add_trPr()
+    cant_split = OxmlElement("w:cantSplit")
+    cant_split.set(qn("w:val"), "true")
+    tr_pr.append(cant_split)
+
+
 def add_page_number(paragraph):
     paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     paragraph.add_run("Page ")
@@ -128,7 +135,9 @@ def add_table(doc, rows):
         weights = [0.9, 2.3, 1.0, 3.2] if rows[0][0].strip() == "Date" else [2.7, 0.7, 1.1, 1.4]
     total = sum(weights)
     for r_index, values in enumerate(rows):
-        cells = table.rows[0].cells if r_index == 0 else table.add_row().cells
+        row = table.rows[0] if r_index == 0 else table.add_row()
+        prevent_table_row_split(row)
+        cells = row.cells
         for i, value in enumerate(values):
             cells[i].width = Inches(available * weights[i] / total)
             cells[i].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
@@ -247,7 +256,7 @@ def add_cover(doc):
     details = doc.add_paragraph()
     details.alignment = WD_ALIGN_PARAGRAPH.CENTER
     details.paragraph_format.space_before = Pt(36)
-    add_inline(details, "**Xiaolong Ma**\nz5557885\n22 July 2026")
+    add_inline(details, "**Xiaolong Ma**\nz5557885\n25 July 2026")
     note = doc.add_paragraph()
     note.alignment = WD_ALIGN_PARAGRAPH.CENTER
     note.paragraph_format.space_before = Pt(44)
@@ -314,7 +323,7 @@ def build():
             doc.add_heading(title, level=2)
         elif line.startswith("## "):
             title = line[3:]
-            if title in {"Appendix A. Evidence Map"}:
+            if title in {"Appendix A. Evidence Map", "Appendix C. Project Work Log"}:
                 doc.add_page_break()
             doc.add_heading(title, level=1)
         elif re.match(r"^\d+\. ", line):

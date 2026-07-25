@@ -11,6 +11,28 @@ from src.data_loader import load_ground_truth
 from src.paths import RESULTS_DIR
 
 
+CONDITION_LABELS = {
+    "no_memory": "Single-fragment\ncontext",
+    "limited_memory": "Five-fragment\nhistory",
+    "full_aggregated_memory": "Full 15-fragment\ncontext",
+    "compartmentalised_memory": "Keyword-ranked\nfive-fragment subset",
+}
+
+CATEGORY_LABELS = {
+    "likely_residential_area": "Residential\ncontext",
+    "away_from_home": "Away from\nhome",
+    "university_or_occupation": "Study or\nwork",
+    "financial_situation": "Financial\nsituation",
+    "activity_links": "Activity\nlinking",
+}
+
+MITIGATION_LABELS = {
+    "none": "No\nmitigation",
+    "remove_exact_time_place": "Generalised\ntime and place",
+    "sensitive_inference_warning": "Sensitive-inference\nwarning",
+}
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Analyze privacy leakage results.")
     parser.add_argument("--input", default=str(RESULTS_DIR / "raw_results.jsonl"))
@@ -76,16 +98,17 @@ def save_group_metrics(rows, group_key, path):
         writer.writerows(metric_rows)
 
 
-def bar_chart(mapping, title, ylabel, output_path):
+def bar_chart(mapping, title, ylabel, output_path, display_labels=None):
     labels = list(mapping.keys())
+    chart_labels = [display_labels.get(label, label) for label in labels] if display_labels else labels
     values = [mapping[label] for label in labels]
-    colors = ["#4C78A8", "#F58518", "#54A24B", "#E45756"]
+    colors = ["#4C78A8", "#F58518", "#54A24B", "#E45756", "#2A9D8F"]
     plt.figure(figsize=(9, 5))
-    bars = plt.bar(labels, values, color=colors[: len(labels)])
+    bars = plt.bar(chart_labels, values, color=colors[: len(labels)])
     plt.title(title)
     plt.ylabel(ylabel)
-    plt.ylim(0, 1)
-    plt.xticks(rotation=25, ha="right")
+    plt.ylim(0, 1.08)
+    plt.xticks(rotation=0, ha="center")
     for bar, value in zip(bars, values):
         plt.text(bar.get_x() + bar.get_width() / 2, value + 0.025, f"{value:.2f}", ha="center")
     plt.tight_layout()
@@ -101,7 +124,13 @@ def mitigation_comparison(rows, output_path):
         key = row["mitigation"]
         grouped[key].append(float(row["leakage_score"]))
     mapping = {key: mean(value) for key, value in grouped.items()}
-    bar_chart(mapping, "Leakage Score by Mitigation", "Mean leakage score", output_path)
+    bar_chart(
+        mapping,
+        "Leakage Score by Mitigation",
+        "Mean leakage score",
+        output_path,
+        MITIGATION_LABELS,
+    )
 
 
 def write_summary(rows, output_path, source_path):
@@ -157,12 +186,14 @@ def main():
         "Leakage Score by Context Condition",
         "Mean leakage score",
         output_dir / "leakage_by_condition.png",
+        CONDITION_LABELS,
     )
     bar_chart(
         group_mean(baseline_scored, "category"),
         "Leakage Score by Attribute Category",
         "Mean leakage score",
         output_dir / "leakage_by_category.png",
+        CATEGORY_LABELS,
     )
     mitigation_comparison(scored, output_dir / "mitigation_comparison.png")
     write_summary(scored, output_dir / "summary.md", args.input)

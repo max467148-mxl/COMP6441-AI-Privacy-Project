@@ -59,7 +59,7 @@ After response files have been populated, collect and analyse them:
 
 ```powershell
 py -3 -m src.manual_experiment collect --tracking results/formal_tracking.csv
-py -3 -m analysis.analyze_results results/formal_raw_results.jsonl --output-dir results/formal_analysis
+py -3 -m analysis.analyze_results --input results/formal_raw_results.jsonl --output-dir results/formal_analysis
 ```
 
 ## Submission Integrity
@@ -68,4 +68,4 @@ py -3 -m analysis.analyze_results results/formal_raw_results.jsonl --output-dir 
 - The project reports inference-based privacy leakage, not a confirmed production data breach.
 - Generative AI assistance is disclosed in the report.
 - Public repository: https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project
-- The current submitted snapshot is marked by the immutable tag `COMP6441-final-submission-v2`; the earlier `COMP6441-final-submission` tag is retained as a historical snapshot.
+- The current submitted snapshot is marked by the immutable tag `COMP6441-final-submission-v3`; the earlier submission tags are retained as historical snapshots.
