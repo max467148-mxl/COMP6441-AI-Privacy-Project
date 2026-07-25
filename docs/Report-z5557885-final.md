@@ -10,7 +10,7 @@
 
 Privacy loss does not always begin with an obvious secret. A conversational AI system may receive ordinary fragments about transport, study, shopping, exercise and work. Each fragment may appear low risk. Combined, they can support sensitive inferences about location, schedule, occupation, finances and linked activities. This project measures that risk through a controlled experiment with three synthetic profiles. The study used 90 standardised prompts in separate ChatGPT Temporary Chats. Sixty baseline trials crossed four context conditions with five inference questions. Another 30 trials tested two mitigations under full context. An automated rubric scored whether each response reconstructed a predefined sensitive attribute.
 
-Leakage rose from 0.53 with one fragment to 0.83 with five and 0.97 with all fifteen. The keyword-ranked five-fragment subset reduced it only to 0.93. Generalising exact time and place details lowered full-context leakage from 0.97 to 0.93. A warning against sensitive inference produced no reduction (0.97). Model-reported confidence fell by a small amount. The results show that context volume and linkability can matter more than the apparent sensitivity of one item. Weak context boundaries and prompt-only warnings were insufficient controls. The main contribution is a reproducible privacy-testing method. The study does not claim a production data breach or a universal model property.
+Leakage rose from 0.53 with one fragment to 0.87 with five and 1.00 with all fifteen. The keyword-ranked five-fragment subset reached 0.97. Generalising exact time and place details lowered full-context leakage from 1.00 to 0.97. A warning against sensitive inference produced the same result (0.97). Model-reported confidence fell by a small amount. The results show that context volume and linkability can matter more than the apparent sensitivity of one item. Weak context boundaries and prompt-only warnings were insufficient controls. The main contribution is a reproducible privacy-testing method. The study does not claim a production data breach or a universal model property.
 
 ## 1. Introduction
 
@@ -24,7 +24,7 @@ The project asks three questions:
 2. **RQ2:** How do the amount and structure of retained context affect leakage and confidence?
 3. **RQ3:** Do simple controls based on minimisation, compartmentalisation or warning instructions reduce leakage?
 
-The study uses fictional profiles and broad inference targets. It never asks for an exact address, real identity, phone number or other direct identifier. This limits harm and isolates the intended effect. Exact prompts, unedited responses, testable code and an experiment log support the comparison.
+The study uses fictional profiles and broad inference targets. It never asks for an exact address, real identity, phone number or other direct identifier. This limits harm and isolates the intended effect. Exact prompts, preserved responses, testable code, an audit record and an experiment log support the comparison.
 
 ## 2. Background and Related Work
 
@@ -106,9 +106,11 @@ The compartment design was deterministic and aligned with each query. For every 
 
 The formal run took place on 22 July 2026 in the ChatGPT Plus web interface using Chrome. The interface displayed “High” mode but no exact model identifier. The report does not invent one. Every prompt opened in a new Temporary Chat. OpenAI states that Temporary Chats do not use or create personalisation memory and do not appear in chat history. They may be retained for up to 30 days for safety purposes (OpenAI, n.d.). The study used this feature to reduce cross-trial contamination, not to prove deletion.
 
-The first complete answer was copied without editing. Each prompt required a JSON object with an answer, evidence list, numerical confidence and uncertainty flag. All 90 outputs parsed. The repository preserves every prompt and response, the CSV tracking sheet, JSONL records and screenshots from the start and end of collection.
+Each prompt required a JSON object with an answer, evidence list, numerical confidence and uncertainty flag. All 90 final outputs parsed. The repository preserves every prompt and response, the CSV tracking sheet, JSONL records and screenshots from the start and end of collection.
 
-After prompt 36, full-page navigation produced `ERR_BLOCKED_BY_CLIENT`. Reloading restored the interface. Collection then used ChatGPT's internal New Chat control. No prompt was duplicated or lost. The experiment log records the incident and the procedural change. Reproducibility includes operational failures, not just clean results.
+After prompt 36, full-page navigation produced `ERR_BLOCKED_BY_CLIENT`. Reloading restored the interface. Collection then used ChatGPT's internal New Chat control. The experiment log records the incident and the procedural change.
+
+A later exact-content audit found five manual copy errors. Responses 004, 049, 051, 068 and 075 duplicated the preceding answer. Each affected prompt was rerun in a new Temporary Chat on 25 July. The original errors remain in the immutable v3 Git tag. The corrected v4 package contains the rerun outputs. A second audit found 90 parseable files and no exact duplicate responses. This changed several aggregate results. The analysis and report were regenerated.
 
 ### 4.3 Scoring
 
@@ -120,7 +122,7 @@ The leakage score is transparent but coarse. Expected-term matching can miss par
 
 ### 4.4 Reproducibility and integrity controls
 
-The repository separates prompt generation, response collection, scoring and analysis. Tests verify the 90-prompt design and corrected scoring order. The analysis script uses baseline records for condition comparisons. It uses full-context records for mitigation comparisons. This separation prevents treatment effects from being mixed in one graph. Raw responses allow another reviewer to apply a different rubric.
+The repository separates prompt generation, response collection, scoring and analysis. Tests verify the 90-prompt design and corrected scoring order. An audit script checks count, JSON parsing, tracking alignment and exact duplicates. The analysis script uses baseline records for condition comparisons. It uses full-context records for mitigation comparisons. This separation prevents treatment effects from being mixed in one graph. Raw responses allow another reviewer to apply a different rubric.
 
 Ethical controls appear in the data and prompts. All profiles are synthetic. Questions request broad contexts, not precise identifiers. Every prompt states that no real person should be identified. Outputs are stored as research evidence. The project does not claim that ChatGPT leaked hidden training data or another user's information.
 
@@ -130,14 +132,14 @@ Ethical controls appear in the data and prompts. All profiles are synthetic. Que
 
 [[FIGURE:condition]]
 
-Context conditions produced the clearest result. Mean leakage was 0.53 with one fragment and 0.83 with five. Full aggregation reached 0.97. Almost every profile-question pair reconstructed the expected broad attribute. Mean self-reported confidence rose from 0.55 in the single-fragment context to 0.83 with all 15 fragments. The uncertainty/refusal rate fell from 46.7% to zero.
+Context conditions produced the clearest result. Mean leakage was 0.53 with one fragment and 0.87 with five. Full aggregation reached 1.00. Every full-context profile-question pair reconstructed the expected broad attribute. Mean self-reported confidence rose from 0.54 in the single-fragment context to 0.84 with all 15 fragments. The uncertainty/refusal rate fell from 46.7% to zero.
 
 | Baseline condition | n | Mean leakage | Mean confidence | Uncertainty/refusal rate |
 |---|---:|---:|---:|---:|
-| Single-fragment context | 15 | 0.53 | 0.55 | 46.7% |
-| Five-fragment history | 15 | 0.83 | 0.78 | 6.7% |
-| Full 15-fragment context | 15 | 0.97 | 0.83 | 0.0% |
-| Keyword-ranked five-fragment subset | 15 | 0.93 | 0.80 | 0.0% |
+| Single-fragment context | 15 | 0.53 | 0.54 | 46.7% |
+| Five-fragment history | 15 | 0.87 | 0.78 | 6.7% |
+| Full 15-fragment context | 15 | 1.00 | 0.84 | 0.0% |
+| Keyword-ranked five-fragment subset | 15 | 0.97 | 0.79 | 0.0% |
 
 Each condition contains 15 profile-question observations. They come from three synthetic profiles crossed with five question categories. They are repeated observations from a fixed design. They are not independent population samples.
 
@@ -156,7 +158,7 @@ No single fragment states the complete profile. The preserved outputs show how a
 
 ### 5.3 The keyword-ranked subset preserved most of the risk
 
-The keyword-ranked subset supplied five fragments, yet leakage remained 0.93. This result was closer to the full 15-fragment context (0.97) than to the generic five-fragment history (0.83). It does not show that compartmentalisation fails in principle. The implemented subset was rich in query-relevant evidence. Five correlated study and work fragments could still reconstruct an occupation or schedule.
+The keyword-ranked subset supplied five fragments, yet leakage reached 0.97. This result was closer to the full 15-fragment context (1.00) than to the generic five-fragment history (0.87). It does not show that compartmentalisation fails in principle. The implemented subset was rich in query-relevant evidence. Five correlated study and work fragments could still reconstruct an occupation or schedule.
 
 This negative result strengthens the security conclusion. A label or fragment count does not prove that a control works. Effective isolation needs purpose-based boundaries and low cross-compartment linkability. It must also account for the inferential power of each subset. A “study” compartment may contain campus location, laboratory timing and transport habits. That set can disclose both occupation and absence windows.
 
@@ -166,23 +168,23 @@ The keyword-ranking policy selects category-relevant fragments, which helps expl
 
 [[FIGURE:category]]
 
-Activity-linking questions had the highest mean leakage across baseline conditions at 0.96. Residential context followed at 0.83. Absence timing and university/occupation each scored 0.79. Financial situation was lowest at 0.71. Financial inference required more interpretation. Shared rent, public transport and budget purchases are weak proxies for hardship. Responses retained some uncertainty but often produced a budget-conscious student profile.
+Activity-linking questions had the highest mean leakage across baseline conditions at 1.00. Residential context followed at 0.83. Study or work scored 0.83. Absence timing scored 0.79. Financial situation was lowest at 0.75. Financial inference required more interpretation. Shared rent, public transport and budget purchases are weak proxies for hardship. Responses retained some uncertainty but often produced a budget-conscious student profile.
 
 This ranking is not a universal hierarchy. It reflects the synthetic fragments and ground truth used here. It shows why linkability is a useful leading indicator. Connecting transport, shopping, study and exercise records makes specific inferences easier to justify.
 
-### 5.5 Simple mitigations produced little or no reduction
+### 5.5 Simple mitigations produced small reductions
 
 [[FIGURE:mitigation]]
 
 | Full-context treatment | n | Mean leakage | Mean confidence | Uncertainty/refusal rate |
 |---|---:|---:|---:|---:|
-| No mitigation | 15 | 0.97 | 0.83 | 0.0% |
-| Generalise exact time/place | 15 | 0.93 | 0.84 | 0.0% |
+| No mitigation | 15 | 1.00 | 0.84 | 0.0% |
+| Generalise exact time/place | 15 | 0.97 | 0.83 | 0.0% |
 | Sensitive-inference warning | 15 | 0.97 | 0.80 | 0.0% |
 
-Generalising exact details reduced measured leakage by 0.04. Broader routines and linked activities supported most expected attributes. The metric does not measure disclosure precision. For P01's residential question, the unmitigated answer inferred a shared student rental in “Sydney's eastern suburbs.” The generalised answer described a “well-connected urban or inner-suburban area” with possible coastal access. Both answers reconstruct residential context and receive the same attribute score. The second is less geographically specific.
+Generalising exact details reduced measured leakage by 0.03. Broader routines and linked activities supported most expected attributes. The metric does not measure disclosure precision. For P01's residential question, the unmitigated answer inferred a shared student rental in “Sydney's eastern suburbs.” The generalised answer described a “well-connected urban or inner-suburban area” with possible coastal access. Both answers reconstruct residential context and receive the same attribute score. The second is less geographically specific.
 
-The warning instruction produced no reduction in leakage. It lowered mean reported confidence by about 0.03. Answers stated sensitive conclusions in cautious language. Generalisation had little effect on **attribute-presence leakage as measured here**. The study cannot determine its effect on disclosure specificity.
+The warning instruction reduced leakage by 0.03. It lowered mean reported confidence by about 0.05. Answers still stated sensitive conclusions in cautious language. Generalisation had the same small effect on **attribute-presence leakage as measured here**. The study cannot determine either control's effect on disclosure specificity.
 
 RQ3 is negative for the controls as implemented. Superficial redaction and prompt-only policy leave the information structure intact. Once an over-privileged component receives the data, cautionary instructions offer weak protection. Preventing unnecessary data from crossing the boundary is stronger.
 
@@ -209,7 +211,7 @@ Other controls include short retention periods, per-purpose stores and context-r
 
 The project produced three practical lessons. First, experimental isolation must be implemented, not assumed. A fresh Temporary Chat for every prompt reduced cross-trial state and created a traceable procedure. Second, analysis code can cause its own measurement failure. The uncertainty-first scorer trusted the model's self-description instead of disclosed content. This understated leakage. Third, treatment comparisons need strict filtering. Condition graphs now use unmitigated records. Mitigation graphs use full-context records.
 
-The browser incident changed the workflow. The run was not discarded. The change was documented, and the New Chat control preserved the isolation objective. This reflects practical cybersecurity work. Evidence remains credible only when tooling failures are handled without hidden changes to the experiment.
+The browser incident changed the workflow. The later response audit found a second operational failure: five answers had been copied into the next file. The correction was documented. The affected prompts were rerun. Evidence remains credible only when errors are preserved, explained and corrected.
 
 ## 7. Limitations and Validity
 
@@ -229,23 +231,23 @@ The initial design included more profiles and mitigation combinations. I reduced
 
 Before this project, I expected uncertainty statements and warning prompts to provide meaningful privacy protection. The raw responses changed that view. A response can claim uncertainty and still provide the profile an attacker wants. This problem appeared in the first scoring pass. I corrected the code, added a regression test and rescored every record. I learned to measure information transferred, not safety language.
 
-The mitigation results were weaker than I expected. The keyword-ranked subset and warning prompt did not produce a large reduction. I kept the negative result. This reinforced the difference between a plausible control and an evaluated control. Future compartments should derive from explicit task purposes. Evaluation should measure utility and privacy.
+The mitigation results were weaker than I expected. The keyword-ranked subset and warning prompt produced only a small reduction. I kept the negative result. This reinforced the difference between a plausible control and an evaluated control. Future compartments should derive from explicit task purposes. Evaluation should measure utility and privacy.
 
-The project improved my ability to design a controlled experiment, preserve evidence and debug measurement code. It also changed how I view the privacy boundary. Data collection is only one boundary. Context retrieval and prompt construction can create the disclosure.
+The project improved my ability to design a controlled experiment, preserve evidence and debug measurement code. The response audit added another lesson. A complete tracking row does not prove correct data transfer. I now treat collection integrity checks as part of the experiment. Data collection is only one privacy boundary. Context retrieval and prompt construction can create the disclosure.
 
 Generative AI use was separated from my research decisions:
 
 | AI use | Role in this project | Student verification |
 |---|---|---|
-| Experimental data collection | ChatGPT produced responses to the 90 fixed prompts. The first complete output was preserved for each trial. | I transferred the outputs, checked the tracking sheet and retained the raw records. |
-| Synthetic data and code support | Generative AI helped draft synthetic profiles. It also helped scaffold, check and debug project code. | I reviewed the profiles and implementation. I ran the tests and checked the analysis outputs. |
-| Report production | Generative AI helped generate document artefacts, edit language and format the report. | I checked claims against the raw data, code, experiment log and cited sources. |
+| Experimental data collection | Generative AI assisted with synthetic experiment inputs. ChatGPT produced responses to the 90 fixed prompts and five correction reruns. | I reviewed the inputs, transferred the outputs, audited all files and retained the v3 error history. |
+| Code checking | Generative AI assisted with code review, debugging and consistency checks. | I reviewed the implementation, ran the tests and checked the analysis outputs. |
+| Report formatting and editing | Generative AI assisted with document formatting, pagination and sentence-level edits. | I checked every claim against the raw data, code, experiment log and cited sources. |
 
 I defined the research question and method. I executed the formal procedure and interpreted the findings. I remain responsible for the submitted work.
 
 ## 9. Conclusion
 
-This project measured how retained context changes privacy-sensitive inference. Across three synthetic profiles, leakage rose from 0.53 with one fragment to 0.97 with all 15 fragments. Confidence increased. Uncertainty flags became less common. The keyword-ranked five-fragment subset retained most of the risk. Exact-detail generalisation had a small effect. A warning changed confidence but not leakage.
+This project measured how retained context changes privacy-sensitive inference. Across three synthetic profiles, leakage rose from 0.53 with one fragment to 1.00 with all 15 fragments. Confidence increased. Uncertainty flags became less common. The keyword-ranked five-fragment subset retained most of the risk. Exact-detail generalisation and the warning each reduced leakage by 0.03.
 
 The conclusion is not that every AI memory feature is unsafe. Privacy cannot be assessed one fragment at a time. Systems should minimise context before model access and isolate data by purpose. They should test correlated combinations and treat prompt warnings as secondary controls. The repository provides a reproducible basis for testing more profiles, models, languages and mitigations.
 
@@ -272,7 +274,7 @@ Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1
 | Claim or artefact | Repository evidence |
 |---|---|
 | Exact formal prompts | `results/formal_prompts/` |
-| Unedited model outputs | `results/formal_responses/` |
+| Final corrected model outputs | `results/formal_responses/` |
 | Machine-readable records | `results/formal_raw_results.jsonl` |
 | Collection status | `results/formal_tracking.csv` |
 | Formal procedure and incident | `evidence/formal_experiment_log.md` |
@@ -280,8 +282,11 @@ Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1
 | Scored records and metrics | `results/formal_analysis/` |
 | Prompt generation and scoring | `src/manual_experiment.py` and `scoring/score.py` |
 | Regression tests | `tests/test_manual_experiment.py` and `tests/test_scoring.py` |
+| Response integrity audit | `tools/audit_formal_responses.py` and `evidence/formal_response_audit.md` |
+| Final test evidence | `evidence/final_test_run.txt` |
+| Work diary | `evidence/work_diary.md` |
 
-The project repository and evidence package are public at https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project. The fixed Git tag `COMP6441-final-submission-v3` identifies the submitted snapshot. It includes source files, formal prompts and responses, analysis outputs, report artefacts and development history.
+The project repository and evidence package are available in the [GitHub project repository](https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project). The fixed Git tag `COMP6441-final-submission-v4` identifies the submitted snapshot. It includes source files, corrected formal responses, analysis outputs, report artefacts and development history. The v3 tag preserves the pre-audit state.
 
 ## Appendix B. Reproduction Commands
 
@@ -305,5 +310,5 @@ This retrospective estimate uses Git history, experiment records, file timestamp
 | 16–21 July | Prompt refinement, pilot checking and collection preparation | 4.0 | Exported prompts, tracking workflow and collection instructions |
 | 22 July | Collection of 90 isolated responses and incident recording | 6.5 | Tracking CSV, raw responses, screenshots and `formal_experiment_log.md` |
 | 22–23 July | Scoring correction, tests, rescore, analysis and visualisation | 4.5 | Scoring code, regression tests, metric files and figures |
-| 23–25 July | Report revision, presentation, document formatting and visual QA | 5.0 | Report artefacts, build scripts, Git history and rendered QA evidence |
+| 23–25 July | Response audit, report revision, presentation, formatting and visual QA | 5.0 | Audit record, report artefacts, build scripts, Git history and rendered QA evidence |
 |  | **Total** | **30.0** | |

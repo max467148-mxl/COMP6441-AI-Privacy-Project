@@ -7,6 +7,7 @@ from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx.shared import Inches, Pt, RGBColor
 
 
@@ -103,12 +104,36 @@ def configure(doc):
     add_page_number(section.footer.paragraphs[0])
 
 
+def add_hyperlink(paragraph, text, url):
+    relationship_id = paragraph.part.relate_to(url, RT.HYPERLINK, is_external=True)
+    hyperlink = OxmlElement("w:hyperlink")
+    hyperlink.set(qn("r:id"), relationship_id)
+
+    run = OxmlElement("w:r")
+    properties = OxmlElement("w:rPr")
+    color = OxmlElement("w:color")
+    color.set(qn("w:val"), BLUE)
+    underline = OxmlElement("w:u")
+    underline.set(qn("w:val"), "single")
+    properties.extend([color, underline])
+    run.append(properties)
+
+    content = OxmlElement("w:t")
+    content.text = text
+    run.append(content)
+    hyperlink.append(run)
+    paragraph._p.append(hyperlink)
+
+
 def add_inline(paragraph, text):
-    parts = re.split(r"(\*\*.*?\*\*|`.*?`|\*.*?\*)", text)
+    parts = re.split(r"(\[[^\]]+\]\(https?://[^)]+\)|\*\*.*?\*\*|`.*?`|\*.*?\*)", text)
     for part in parts:
         if not part:
             continue
-        if part.startswith("**") and part.endswith("**"):
+        link = re.fullmatch(r"\[([^\]]+)\]\((https?://[^)]+)\)", part)
+        if link:
+            add_hyperlink(paragraph, link.group(1), link.group(2))
+        elif part.startswith("**") and part.endswith("**"):
             run = paragraph.add_run(part[2:-2])
             run.bold = True
         elif part.startswith("`") and part.endswith("`"):

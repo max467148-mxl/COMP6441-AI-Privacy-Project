@@ -1,29 +1,24 @@
-# Submission Checklist
+# Submission Package Status
 
 ## Ready Artefacts
 
-- `Report-z5557885.docx` — editable 15-page formal report.
-- `Report-z5557885.pdf` — required submission PDF after final render verification.
-- `Presentation-z5557885.pptx` — six-slide, five-minute presentation.
-- `Presentation-script-z5557885.md` — timed speaking script.
-- `results/formal_raw_results.jsonl` — all 90 formal records.
-- `results/formal_analysis/` — corrected metrics, scored CSV and charts.
-- `evidence/formal_experiment_log.md` — procedure, incident and scoring correction.
-- `evidence/screenshots/` — beginning and end interface evidence.
+- [x] `Report-z5557885.docx` - editable formal report.
+- [x] `Report-z5557885.pdf` - rendered submission PDF.
+- [x] `Presentation-z5557885.pptx` - six-slide presentation.
+- [x] `Presentation-script-z5557885.md` - timed speaking script.
+- [x] `results/formal_raw_results.jsonl` - 90 corrected formal records.
+- [x] `results/formal_analysis/` - regenerated metrics, scored CSV and charts.
+- [x] `evidence/formal_experiment_log.md` - procedure, incident and transparent response correction.
+- [x] `evidence/formal_response_audit.md` - duplicate and alignment audit.
+- [x] `evidence/final_test_run.txt` - final automated test evidence.
+- [x] `evidence/work_diary.md` - work estimate aligned with report Appendix C.
 
-## Student Actions Required Before Submission
+## Integrity Status
 
-- Read the report and speaking script aloud; change any reflection wording that does not match personal understanding or experience.
-- Confirm the course's current AI-use declaration rules and submit the declaration in the required location.
-- Verify that the reconstructed work-diary estimates reasonably match the actual personal time and correct them where necessary.
-- Rehearse once with a timer and shorten pauses if the talk exceeds five minutes.
-- Public GitHub evidence repository created and linked in the report: https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project
-- Final submission commit and fixed tag `COMP6441-final-submission-v3` created after adding the access URL; earlier submission tags remain unchanged.
-- Upload `Report-z5557885.pdf`, the PPTX if required, and the repository/evidence link according to the course submission page.
-
-## Integrity Notes
-
-- The experiment uses synthetic profiles only.
-- The exact model identifier was not exposed; the report correctly records only the visible interface labels.
-- Results are descriptive and do not claim statistical significance or a real data breach.
-- Generative AI use is disclosed in the report.
+- [x] Synthetic profiles only.
+- [x] Exact model identifier not claimed.
+- [x] Results described without statistical-significance or real-breach claims.
+- [x] Generative AI use disclosed in the report.
+- [x] Response-copy errors preserved in v3 history and corrected in v4.
+- [x] Public repository linked through a short report hyperlink.
+- [x] Final snapshot marked by `COMP6441-final-submission-v4`; earlier tags remain unchanged.

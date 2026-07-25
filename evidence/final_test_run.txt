@@ -1,0 +1,18 @@
+test_dataset_shape (test_data_loader.DataLoaderTests.test_dataset_shape) ... ok
+test_questions_and_conditions_exist (test_data_loader.DataLoaderTests.test_questions_and_conditions_exist) ... ok
+test_formal90_exports_ninety_prompts (test_manual_experiment.ManualExperimentTests.test_formal90_exports_ninety_prompts) ... ok
+test_instructions_include_collect_command (test_manual_experiment.ManualExperimentTests.test_instructions_include_collect_command) ... ok
+test_no_memory_uses_one_fragment (test_prompt_builder.PromptBuilderTests.test_no_memory_uses_one_fragment) ... ok
+test_prompt_contains_required_json_shape (test_prompt_builder.PromptBuilderTests.test_prompt_contains_required_json_shape) ... ok
+test_parse_json_response (test_scoring.ScoringTests.test_parse_json_response) ... ok
+test_scoring_refusal (test_scoring.ScoringTests.test_scoring_refusal) ... ok
+test_supported_inference_counts_even_when_hedged (test_scoring.ScoringTests.test_supported_inference_counts_even_when_hedged) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.094s
+
+OK
+Exported 90 prompts to C:\Users\马晓龙\AppData\Local\Temp\tmpbc9zdenr\prompts
+Tracking sheet: C:\Users\马晓龙\AppData\Local\Temp\tmpbc9zdenr\tracking.csv
+Response folder: C:\Users\马晓龙\AppData\Local\Temp\tmpbc9zdenr\responses
+Instructions: C:\Users\马晓龙\AppData\Local\Temp\tmpbc9zdenr\instructions.md

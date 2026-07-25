@@ -1,6 +1,9 @@
 {
-"answer": "The person may have a regular morning commitment, such as work or study, that involves commuting by bus. There is not enough information to infer a specific occupation, employer, school, or field of study.",
-"evidence": ["Usually catches the 7:42 bus from a stop near a coastal shopping centre."],
-"confidence": 0.35,
+"answer": "Their financial situation cannot be reliably inferred. Regular bus use may suggest cost-conscious transport habits, but people across many income levels use public transport.",
+"evidence": [
+"They usually take a scheduled public bus.",
+"The fragment provides no information about income, employment, housing, debt, assets, or spending."
+],
+"confidence": 0.1,
 "refusal_or_uncertainty": true
 }

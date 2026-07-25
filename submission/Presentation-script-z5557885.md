@@ -10,15 +10,15 @@ The threat is application-layer inference, not hacking model weights or extracti
 
 ## Slide 3 — Ninety isolated trials (1:20–2:05)
 
-I created three synthetic profiles with fifteen fragments each and asked five standard questions about residential context, absence times, occupation, finances and links between activities. The 60 baseline trials compared one fragment, five fragments, all fifteen fragments and a five-fragment compartment. Another 30 trials tested two mitigations under full context. Every prompt ran in a separate Temporary Chat, and I preserved the first completed response. All 90 outputs parsed as JSON. The interface showed ChatGPT Plus in High mode, but it did not expose an exact model identifier, so I do not claim one.
+I created three synthetic profiles with fifteen fragments each and asked five standard questions about residential context, absence times, occupation, finances and links between activities. The 60 baseline trials compared one fragment, five fragments, all fifteen fragments and a five-fragment subset. Another 30 trials tested two mitigations under full context. The original procedure used a separate Temporary Chat for each prompt. A later audit found five copy-transfer errors. I reran those prompts and regenerated the results. All 90 final outputs parsed as JSON. The interface showed ChatGPT Plus in High mode, but it did not expose an exact model identifier, so I do not claim one.
 
 ## Slide 4 — Context increased leakage (2:05–2:55)
 
-The strongest result is the context gradient. Mean leakage was 0.53 with one fragment, 0.83 with five, 0.93 in the compartment and 0.97 with all fifteen. Model-reported confidence also rose from 0.55 to 0.83. These are descriptive scores across fifteen responses per condition, not population estimates. The important point is that full aggregation changed both the frequency and confidence of privacy-sensitive inference.
+The strongest result is the context gradient. Mean leakage was 0.53 with one fragment, 0.87 with five, 0.97 in the keyword-ranked subset and 1.00 with all fifteen. Model-reported confidence rose from 0.54 to 0.84. These are descriptive scores across fifteen responses per condition, not population estimates. Full aggregation changed both the frequency and confidence of privacy-sensitive inference.
 
 ## Slide 5 — Weak mitigations failed (2:55–3:50)
 
-The mitigations were less effective than expected. Generalising exact time and place details reduced leakage only from 0.97 to 0.93 because the broader routine remained linkable. A warning instruction produced no score reduction; it only lowered confidence slightly. The compartment also retained 0.93 leakage because its five fragments were still correlated. So the label “compartment” is not enough. Boundaries must be designed around purpose and tested for the inferences they still enable.
+The mitigations were less effective than expected. Generalising exact time and place details reduced leakage only from 1.00 to 0.97 because the broader routine remained linkable. A warning instruction produced the same small reduction. The keyword-ranked subset retained 0.97 leakage because its five fragments were correlated. A label is not enough. Boundaries must be designed around purpose and tested for the inferences they still enable.
 
 During analysis I also found a scoring defect: the first version treated an uncertainty flag as a refusal before checking the answer. Some answers were cautious but still revealed the target attribute. I corrected the scoring order, added a regression test and rescored all records. This reinforced that privacy should be measured by information disclosed, not by cautious wording.
 
@@ -27,4 +27,3 @@ During analysis I also found a scoring defect: the first version treated an unce
 I draw four recommendations. First, minimise context at prompt construction and retrieve only what the current task needs. Second, isolate data by purpose, not by an arbitrary fragment count. Third, red-team combinations and attribute inference rather than checking only for direct secrets. Fourth, treat prompt warnings as defence in depth, not an access-control boundary.
 
 The experiment is limited to three synthetic profiles, five questions and one interface mode, and the automated rubric is coarse. Future work should add blinded human coding, more models and stronger retrieval and retention controls while measuring utility as well as privacy. The main conclusion is that privacy is a property of the combination, not just the individual fragment.
-

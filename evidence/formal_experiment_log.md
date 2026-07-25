@@ -2,42 +2,57 @@
 
 ## Run Details
 
-- Date: 2026-07-22
+- Original collection date: 2026-07-22
+- Correction audit date: 2026-07-25
 - Interface: ChatGPT Plus in Chrome
 - Mode shown by interface: High
 - Exact model identifier: not exposed by the interface
 - Profiles: P01, P02, P03 (synthetic)
-- Total prompts: 90
-- Isolation: a new Temporary Chat was opened for every prompt
-- Response policy: the first completed response was copied without editing
-- Format result: 90 of 90 responses parsed as JSON
+- Total prompt-response records: 90
+- Isolation: a new Temporary Chat was opened for every original prompt and every correction rerun
+- Final format result: 90 of 90 corrected responses parsed as JSON
 
 ## Study Design
 
 - Baseline comparison: 3 profiles x 4 context conditions x 5 questions = 60 responses
 - Mitigation comparison: 3 profiles x 2 mitigations x 5 questions = 30 responses
-- Mitigations were tested only under `full_aggregated_memory` to avoid mixing the mitigation effect with context size.
+- Mitigations were tested only under `full_aggregated_memory`.
 
 ## Procedure Evidence
 
 - `formal_001_temporary_chat.png` shows the beginning of the controlled run.
 - `formal_090_temporary_chat.png` shows the end of the controlled run.
-- `results/formal_prompts/` contains the exact submitted prompts.
-- `results/formal_responses/` contains the unedited copied responses.
+- `results/formal_prompts/` contains the submitted prompts.
+- `results/formal_responses/` contains the final corrected responses.
 - `results/formal_raw_results.jsonl` contains the collected records.
+- `evidence/formal_response_audit.md` records the response audit and corrections.
 
-## Incident and Method Change
+The two screenshots are interface evidence from the beginning and end of collection. They are not complete proof of all 90 chat transitions. JSONL timestamps record import time. They do not record the generation time of each ChatGPT response.
 
-After 36 completed prompts, Chrome briefly returned `ERR_BLOCKED_BY_CLIENT` during a full-page navigation. Reloading restored the page. The procedure was changed to use ChatGPT's own New Chat link between trials instead of repeatedly navigating the whole page. No completed response was lost or repeated.
+## Browser Incident
 
-## Final Automated Results
+After 36 completed prompts, Chrome returned `ERR_BLOCKED_BY_CLIENT` during a full-page navigation. Reloading restored the page. Later trials used ChatGPT's New Chat control. The prompt set remained complete.
 
-- Baseline leakage by condition: no memory 0.53; limited memory 0.83; full aggregated memory 0.97; compartmentalised memory 0.93.
-- Full-context leakage by mitigation: none 0.97; remove exact time/place 0.93; sensitive-inference warning 0.97.
-- Mean model-reported confidence increased from 0.55 under no memory to 0.83 under full aggregation.
+## Response Audit and Correction
+
+An exact-content audit on 25 July found five response files that duplicated the preceding response and answered the wrong question:
+
+- 004 duplicated 003
+- 049 duplicated 048
+- 051 duplicated 050
+- 068 duplicated 067
+- 075 duplicated 074
+
+The likely cause was manual copy-paste error during collection. Each affected prompt was rerun in a new Temporary Chat. The first complete correction response was saved. The v3 Git tag preserves the erroneous files. The v4 history records the correction. A second scan found 90 parseable files, no exact duplicate responses and no filename-to-tracking mismatch.
+
+## Corrected Automated Results
+
+- Baseline leakage: single fragment 0.53; five fragments 0.87; full 15-fragment context 1.00; keyword-ranked subset 0.97.
+- Full-context leakage by mitigation: none 1.00; generalised time/place 0.97; sensitive-inference warning 0.97.
+- Mean model-reported confidence rose from 0.54 with one fragment to 0.84 with all 15 fragments.
 
 ## Scoring Correction
 
-The first scoring pass treated `refusal_or_uncertainty=true` as a refusal before checking the answer content. Inspection showed that some answers used cautious language but still reconstructed the expected sensitive attribute. The scorer was corrected so supported sensitive content is evaluated before the model's self-reported uncertainty flag. Tests were added to prevent regression, all 90 records were rescored, and the values above are the corrected results.
+The first scoring pass treated `refusal_or_uncertainty=true` as a refusal before checking answer content. Some answers used cautious language but still reconstructed the expected attribute. The scorer was corrected. Tests prevent regression. All 90 records were rescored.
 
-Automated scores are a transparent first-pass measure based on expected-term overlap. They are reported as descriptive evidence and remain a limitation rather than a substitute for independent human coding.
+Automated scores use expected-term overlap. They are descriptive evidence. No blinded human validation was conducted. The report treats this as a construct-validity limitation.

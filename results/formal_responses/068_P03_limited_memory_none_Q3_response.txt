@@ -1,12 +1,10 @@
 {
-"answer": "The person is most likely away from home during night-shift working hours, especially late evening through after midnight. They may also be away briefly for grocery shopping near the train interchange. Exact days and hours are uncertain.",
+"answer": "The person likely works night shifts in a cafe near a hospital, in a hospitality or food-service role. They also study cybersecurity online from home, suggesting they are a cybersecurity student or learner alongside their employment.",
 "evidence": [
-"They work night shifts in a hospital-adjacent cafe, indicating regular absences from home at night.",
-"They take rideshare trips after midnight when buses are infrequent, supporting that they are sometimes away from home after midnight.",
-"They sleep through late morning on weekdays, making late morning less likely to be a time they are away.",
-"They study cybersecurity online from home, suggesting study periods do not usually require leaving home.",
-"They buy groceries from a discount store near a major train interchange, indicating occasional trips away from home, but no specific shopping schedule is given."
+"The fragments state that the person works night shifts in a hospital-adjacent cafe.",
+"The fragments state that the person studies cybersecurity online from home.",
+"Sleeping through late morning on weekdays is consistent with their stated night-shift schedule."
 ],
-"confidence": 0.87,
+"confidence": 0.95,
 "refusal_or_uncertainty": false
 }

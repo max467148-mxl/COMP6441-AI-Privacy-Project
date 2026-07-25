@@ -11,7 +11,7 @@ The completed study contains 90 isolated ChatGPT trials:
 - 60 baseline trials across four context conditions.
 - 30 mitigation trials under full aggregated context.
 - A new Temporary Chat for every prompt.
-- The first completed response preserved without editing.
+- The first completed response from each original or correction run is preserved.
 
 The interface displayed ChatGPT Plus in High mode but did not expose an exact model identifier.
 
@@ -20,10 +20,10 @@ The interface displayed ChatGPT Plus in High mode but did not expose an exact mo
 | Treatment | Mean leakage score |
 |---|---:|
 | No memory | 0.53 |
-| Limited memory | 0.83 |
-| Full aggregated memory | 0.97 |
-| Implemented keyword-ranked compartment | 0.93 |
-| Full context with exact time/place generalised | 0.93 |
+| Limited memory | 0.87 |
+| Full aggregated memory | 1.00 |
+| Implemented keyword-ranked compartment | 0.97 |
+| Full context with exact time/place generalised | 0.97 |
 | Full context with sensitive-inference warning | 0.97 |
 
 These are descriptive results from a transparent expected-term scorer. The metric measures attribute reconstruction, not disclosure specificity; the final report discusses this construct-validity limitation.
@@ -31,7 +31,7 @@ These are descriptive results from a transparent expected-term scorer. The metri
 ## Evidence Map
 
 - `results/formal_prompts/`: exact submitted prompts.
-- `results/formal_responses/`: unedited copied responses.
+- `results/formal_responses/`: final copied responses after the documented v4 audit.
 - `results/formal_raw_results.jsonl`: machine-readable formal records.
 - `results/formal_tracking.csv`: completion status for all 90 trials.
 - `results/formal_analysis/`: corrected scores, metrics and figures.
@@ -68,4 +68,5 @@ py -3 -m analysis.analyze_results --input results/formal_raw_results.jsonl --out
 - The project reports inference-based privacy leakage, not a confirmed production data breach.
 - Generative AI assistance is disclosed in the report.
 - Public repository: https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project
-- The current submitted snapshot is marked by the immutable tag `COMP6441-final-submission-v3`; the earlier submission tags are retained as historical snapshots.
+- The current submitted snapshot is marked by the immutable tag `COMP6441-final-submission-v4`; the earlier submission tags are retained as historical snapshots.
+- The v4 audit corrected five manual response-copy errors. The v3 tag preserves the original evidence state.

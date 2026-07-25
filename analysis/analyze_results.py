@@ -155,8 +155,9 @@ def write_summary(rows, output_path, source_path):
     source_name = Path(source_path).name
     if source_name.startswith("formal_"):
         lines.append(
-            "These are formal controlled-run results. Automated leakage scores remain "
-            "subject to the planned human validation before final reporting."
+            "These are descriptive results from an automated expected-term scorer. "
+            "No blinded human validation was conducted. The report treats this as a "
+            "construct-validity limitation."
         )
     elif source_name.startswith("manual_"):
         lines.append(

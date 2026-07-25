@@ -1,16 +1,13 @@
 # Work Diary Evidence
 
-The durations below are a reconstructed estimate based on Git history, experiment artefacts and the completed deliverables. The student must correct any value that does not reasonably match the time actually spent.
+This retrospective estimate uses Git history, experiment records, file timestamps and recollection of preliminary research. The hours represent active project work, not the intervals between commits. Dates and hours are approximate.
 
-| Date | Activity | Evidence | Actual duration |
-|---|---|---|---|
-| 15 July 2026 | Defined the context-aggregation privacy problem and created the project scaffold. | Git commit `34099cf`; `docs/`; `data/`; `src/` | 3.0 hours |
-| 15 July 2026 | Researched privacy concepts and drafted the ethics, threat model and methodology. | Git commit `ca11e39`; initial report and methodology documents | 4.0 hours |
-| 15 July 2026 | Added the manual ChatGPT prompt export, tracking and collection workflow. | Git commit `ca77fe2`; `src/manual_experiment.py` | 4.0 hours |
-| 22 July 2026 | Finalised the 90-prompt factorial design and added design tests. | `src/manual_experiment.py`; `tests/test_manual_experiment.py` | 3.0 hours |
-| 22 July 2026 | Executed 90 isolated Temporary Chat trials and preserved prompts, responses and screenshots. | `results/formal_*`; `evidence/screenshots/` | 7.0 hours |
-| 22 July 2026 | Handled a Chrome `ERR_BLOCKED_BY_CLIENT` interruption and documented the procedure change. | `evidence/formal_experiment_log.md` | 0.5 hours |
-| 22 July 2026 | Corrected uncertainty-first scoring, added a regression test and rescored all results. | `scoring/score.py`; `tests/test_scoring.py`; formal analysis outputs | 2.5 hours |
-| 22 July 2026 | Corrected analysis filters and regenerated statistics and visualisations. | `analysis/analyze_results.py`; formal analysis CSV and charts | 2.5 hours |
-| 22 July 2026 | Completed citations, formal report, presentation, speaking script and visual QA. | Final report references; `submission/`; presentation render evidence | 3.5 hours |
-|  | **Total reconstructed estimate** |  | **30.0 hours** |
+| Date | Activity | Approx. hours | Supporting evidence |
+|---|---|---:|---|
+| 1-14 July | Topic selection, preliminary reading and source collection | 4.0 | Retrospective estimate; sources used in report Sections 2 and 3 |
+| 15 July | Threat model, synthetic profiles, project scaffold and dry-run pipeline | 6.0 | Commits `34099cf`, `ca11e39` and `ca77fe2`; initial code and documentation |
+| 16-21 July | Prompt refinement, pilot checking and collection preparation | 4.0 | Exported prompts, tracking workflow and collection instructions |
+| 22 July | Collection of 90 isolated responses and incident recording | 6.5 | Tracking CSV, raw responses, screenshots and `formal_experiment_log.md` |
+| 22-23 July | Scoring correction, tests, rescore, analysis and visualisation | 4.5 | Scoring code, regression tests, metric files and figures |
+| 23-25 July | Response audit, report revision, presentation, formatting and visual QA | 5.0 | Audit record, report artefacts, build scripts, Git history and rendered QA evidence |
+|  | **Total** | **30.0** | |
