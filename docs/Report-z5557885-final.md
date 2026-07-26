@@ -12,7 +12,7 @@ Many people think that privacy leakage can only come from straightforward confid
 
 But once AI integrates scattered information, it can infer an address, fixed routine, occupation, income level and different life patterns. These derived contents are sensitive private information. In order to quantify this hidden risk, I designed a controlled experiment and built three synthetic user profiles as test samples. The whole experiment prepared 90 standardised prompts. Each prompt ran separately in an independent ChatGPT Temporary Chat. Among them, 60 prompts formed the baseline groups across four different context conditions and five privacy-inference questions. The remaining 30 prompts tested two privacy mitigation methods under the full-information condition. I also designed a set of automatic scoring rules to determine whether the preset sensitive user attributes were reconstructed in the AI answer.
 
-The experimental data show the risk change directly. When only one daily fragment was given, the leakage score was 0.53. When five fragments were given, it rose to 0.87. After all fifteen pieces of information were provided to the model, the leakage score reached 1.00. Even when only the five most relevant keyword-ranked fragments were selected, the leakage score was still 0.97. I tried two protection methods. After generalising the exact time and place in the dialogue, the leakage score under full context decreased from 1.00 to 0.97. A sensitive-inference warning produced the same result, while the confidence of the model output was only slightly reduced.
+The experimental data show the risk change directly. With only one daily fragment, the leakage score was 0.53. When five fragments were given, it rose to 0.87. After all fifteen pieces of information were provided to the model, the leakage score reached 1.00. Even when only the five most relevant keyword-ranked fragments were selected, the leakage score was still 0.97. I tried two protection methods. After generalising the exact time and place in the dialogue, the leakage score under full context decreased from 1.00 to 0.97. A sensitive-inference warning produced the same result, while the confidence of the model output was only slightly reduced.
 
 From the experimental results, it can be concluded that the total amount of information in a dialogue, and whether the information can be connected, are more important than whether one item looks sensitive by itself. Only vague context and simple warnings cannot stop privacy inference. The main value of this project is to provide an AI privacy-testing process that others can reproduce. This report does not mean that commercial large language models generally have data-leakage vulnerabilities.
 
@@ -36,11 +36,11 @@ For example, **training-data extraction** mainly studies whether the model will 
 
 Another common attack is **membership inference**. It does not focus on what the model remembers, but on whether an attacker can judge whether a record was used to train the model. Shokri et al. (2017) systematically studied this attack method.
 
-In my experiment, all information that the model needs is already in the current prompt. There is no process for the model to “retrieve secrets” from training data. The real problem is simpler and easier to appear in an ordinary application. A few messages alone may be nothing, but after the model puts them together, will it derive sensitive conclusions that were never written directly in the input?
+In my experiment, all information used by the model is already in the current prompt. It does not need to “retrieve secrets” from training data. I was more interested in what the model could build from a few ordinary messages after reading them together.
 
-Therefore, I think this risk is closer to **attribute inference** and **user profile reconstruction**.
+For this reason, I treated the risk as **attribute inference** and **user profile reconstruction**.
 
-The research of Staab et al. (2024) showed that language models can infer personal attributes from ordinary text. Common anonymisation or model alignment cannot reliably remove this ability. This result is important for my project because it raises another problem. The risk may not only come from the model itself. It may also be related to how much context the application retains for the model.
+Staab et al. (2024) showed that language models can infer personal attributes from ordinary text, and that common anonymisation or model alignment cannot reliably remove this ability. I used this work because it made me look beyond the model alone. The risk may also depend on how much context the application keeps and gives back to the model.
 
 The “sensitive information” in this report uses a relatively broad definition. It mainly refers to inferences related to personal privacy or that may be used in some situations. Not all content tested here belongs to the “special categories of personal data” in GDPR Article 9.
 
@@ -48,11 +48,11 @@ The “sensitive information” in this report uses a relatively broad definitio
 
 Article 5 of the EU General Data Protection Regulation sets out purpose limitation, data minimisation and storage limitation (European Parliament and Council, 2016). A fragment may have been collected lawfully. Reusing it for unrelated inference may exceed the original purpose. Retaining every interaction “just in case” increases the attack surface.
 
-The NIST Privacy Framework treats privacy as an organisational risk-management problem, not a binary property (NIST, 2020). The NIST AI Risk Management Framework emphasises governance, measurement and management across the AI lifecycle (Tabassi, 2023). These frameworks raise three practical questions for this study. What context is necessary? Who or what can access it? How should privacy impact be measured before deployment?
+The NIST Privacy Framework treats privacy as an organisational risk-management problem, not a binary property (NIST, 2020). The NIST AI Risk Management Framework emphasises governance, measurement and management across the AI lifecycle (Tabassi, 2023). For this experiment, I used them to ask three practical questions: what context is needed, who or what can access it, and how privacy impact can be checked before deployment.
 
 ### 2.3 Linkability and the LINDDUN lens
 
-LINDDUN provides a useful vocabulary for this experiment (Deng et al., 2011). **Linkability** is the main threat. Separate activities can be recognised as belonging to one synthetic profile. Repeated time and place clues may then narrow a living context, enabling **identifiability**. A response that states the inferred attribute creates **disclosure**. **Unawareness** matters when users perceive each interaction as isolated. **Non-compliance** arises when a system retains or combines more context than its declared purpose requires.
+I used LINDDUN to describe the privacy problems in this experiment (Deng et al., 2011). The main one was **linkability**. Separate activities could be recognised as belonging to the same synthetic profile. Repeated time and place clues could then narrow the living context and increase **identifiability**. If the answer stated the inferred attribute, I treated that as **disclosure**. **Unawareness** was also relevant because a user may think that each interaction is separate. **Non-compliance** can appear when the system keeps or combines more context than its stated purpose needs.
 
 [[FIGURE:threat_model]]
 
@@ -60,29 +60,29 @@ LINDDUN provides a useful vocabulary for this experiment (Deng et al., 2011). **
 
 ### 3.1 Asset, adversary and security objective
 
-The asset that this experiment wants to protect is the privacy of the fictional users. The tested content is not direct identity information such as a name or telephone number. It is a set of attributes that look less sensitive but may reveal more after combination. These include what kind of environment a person probably lives in, when the person is more likely to be away from home, whether the person studies or works, the general financial situation, and whether different daily activities can be connected.
+The main thing I wanted to protect in this experiment was the privacy of the synthetic users. I did not focus on names, phone numbers or other information that directly identifies someone. Instead, I tested things that look quite ordinary at first, such as living situation, study or work, financial situation, time away from home, and links between daily activities.
 
-Therefore, the security objective is not to require the model to “know nothing”, because normal use of artificial intelligence requires some context. I am more concerned about whether the final information obtained by the model exceeds the real scope of the current interaction. A user may give some information to complete one task. This does not mean that the system should use all previously retained content to build a more complete personal profile.
+I did not expect the model to know nothing about the user. That would not be realistic, because the model needs some context to answer a normal question. The problem I was more interested in was what happens when the system knows more than it actually needs for the current task. For example, a user may mention one activity for one reason, but that does not necessarily mean older information should also be brought back and used to build a larger profile.
 
-The assumed ability of the attacker is also limited. The attacker can use the AI interface normally, or continue to ask questions through a component that can read retained context. The attacker will not modify model weights, bypass login verification, enter another user's account or directly access a private backend database.
+The attacker in this project also has fairly limited abilities. They can use the AI interface and ask questions using context that the system has retained. I did not assume that they can change model weights, break authentication, access another person's account or directly enter a private database.
 
-I deliberately excluded these traditional attack methods. This experiment does not ask what happens after the system is “hacked”. It asks about a more common situation: **even without vulnerability exploitation or intrusion, can the existing context functions of the product create additional privacy risk?**
+I chose this limited attacker on purpose. I was not trying to simulate a system that had already been hacked. What interested me more was whether normal product functions could already create a privacy problem, even when everything is technically working as designed.
 
 ### 3.2 Trust boundaries and abuse case
 
-The data flow of the experiment can be divided into several stages. First, fictional information fragments are generated. Then the system decides which fragments enter the current context, constructs the prompt, lets the model generate an answer, and finally scores the result.
+I treated the experiment as a simple flow. The synthetic fragments exist first, then some of them are selected as context. After that they are put into the prompt, the model gives an answer, and I score that answer.
 
-I think the most important trust boundary is between **context storage and prompt construction**.
+For me, the important point in this flow is the step between **context storage and prompt construction**.
 
-When one item is stored separately, it may not be special. For example, a person has a four-hour work shift on Saturday afternoon. This is common. Going to classes on several days is also not sensitive by itself. But if the system puts all these originally scattered items back into the same prompt, the model has a chance to connect them. The real risk starts from here.
+Information can be fairly harmless while it is still separated. A four-hour retail shift on Saturday afternoon is not very sensitive by itself. The same is true for going to class on several days.
 
-A direct abuse example is to ask the model: “When is this person most likely away from home?”
+The situation changes when these records appear together. At that point the model is no longer looking at one event. It can compare several events and try to find a pattern.
 
-The answer may use class times, commuting habits, work shifts and other activity patterns at the same time. The important point is that no original item directly says, “No one is at home at this time.” The model infers this conclusion after combining multiple fragments.
+One question I used was: “When is this person most likely away from home?”
 
-In order to control the experiment's risk, I did not test exact-address prediction or ask the model to identify real people. But even broad inference may have a practical impact.
+None of the fragments says directly that the home is empty at a certain time. The answer has to be built from other things, such as class times, travel habits and work shifts. This is why I considered the combination itself part of the privacy risk.
 
-For example, inferring when a person is often away from home may support targeting of the person's residence. After learning a person's study and work pattern, it becomes easier to design credible social-engineering messages. If the model estimates a person's financial situation from spending habits or other fragments, this judgement may be used for differential treatment. Long-term links between work and study activities may also become a relatively complete form of behavioural monitoring.
+I did not ask for an exact address or the identity of a real person. Even so, some broad answers may still be useful in a harmful way. Knowing a regular study or work schedule could make a social-engineering message more believable. A rough financial profile could also affect how someone is treated. The information does not need to identify a person exactly before it becomes useful to an attacker.
 
 ### 3.3 Original proposal compared with the final outcome
 
@@ -120,7 +120,7 @@ Four baseline context conditions changed only the fragments supplied:
 
 The four conditions were crossed with five questions for each profile. This produced 60 baseline prompts. Two more mitigations were tested under full aggregated context. One replaced exact time and place expressions with broader wording. The other warned the model against unsupported sensitive inferences. These treatments added 30 prompts, for 90 in total. Using the same full-context baseline keeps mitigation effects separate from context size.
 
-The compartment design was deterministic and aligned with each query. For every question category, the generator counted matches against a predefined keyword list. It selected the five highest-ranked fragments. The resulting subset was reproducible and favoured semantically correlated evidence. The experiment tests this keyword-ranked design, not compartmentalisation as a general control.
+The compartment design was deterministic and aligned with each query. I used a predefined keyword list for every question category, counted the matches and kept the five highest-ranked fragments. This made the subset reproducible, but it also kept evidence that was closely related to the question. The experiment tests this keyword-ranked design, not compartmentalisation as a general control.
 
 ### 4.2 Controlled execution
 
@@ -158,9 +158,9 @@ Therefore, the results are more suitable as descriptive comparisons for this spe
 
 ### 4.4 Reproducibility and integrity controls
 
-The tests confirm whether the **90 prompts** follow the original experiment design. They also check whether the revised scoring process runs in the correct order.
+I used tests to check that the **90 prompts** still followed the experiment design and that the revised scoring steps ran in the correct order.
 
-There is also a separate audit script. It checks the number of files, whether JSON can be parsed, whether the tracking table and response files correspond, and whether there are identical duplicate answers. This check helped me find the copying problem mentioned above.
+I also wrote a separate audit script for file counts, JSON parsing, tracking-table matches and identical responses. This was the check that helped me find the copying problem described above.
 
 All original model replies are also preserved rather than leaving only the final scores. In this way, even if another person disagrees with my scoring rules, that person can create a different scoring method from the original answers instead of only accepting the final numbers that I generated.
 ## 5. Results
@@ -186,42 +186,46 @@ However, these figures cannot be understood as population-level statistical resu
 
 However, the single-fragment leakage score is not zero. This cannot be ignored. Some fragments already contain strong hints. For example, a fixed repeated bus time may let the model estimate when a person needs to leave home even without other information.
 
-Therefore, aggregation does not suddenly change the situation from “no risk” to “risk”. It is more like scattered inference possibilities already exist. Context aggregation continues to strengthen them and finally forms a more complete and useable personal profile.
+One thing I noticed is that the single-fragment score was already **0.53**, so the risk did not begin only when all the fragments were added. Some clues were already useful by themselves. The larger context mostly made those weak clues easier to connect and support.
 
 ### 5.2 Specific answers are more intuitive than one leakage score
 
-When only one fragment was provided, the main information seen by the model was the repeated **7:42 bus**. It could guess that this time might be related to study or work, but there was not enough information to judge the specific situation.
+The leakage score shows the overall change, but I found the actual answers easier to understand.
 
-The model started to connect laboratory classes, evening tutorials, study near Kensington and part-time retail work on Saturday afternoons. The final result was not a vague statement that “this person may have a fixed schedule”. It became a relatively complete study-and-work profile: a tertiary student with a weekend part-time job.
+P01 is a good example. In the single-fragment condition, the model mainly had the repeated **7:42 bus** time. From this it could guess that the person probably had some regular study or work activity, but it could not say much more.
+
+The full-context answer was very different. With all 15 fragments available, the model connected the laboratory sessions, evening tutorials, study around Kensington and the Saturday retail shift. From those separate details, it described the person as a tertiary student who also had a weekend part-time job.
 
 | Condition | Available evidence | Preserved response excerpt |
 |---|---|---|
 | Single-fragment context | One recurring bus-time fragment | “There is not enough information to infer a specific occupation, employer, school, or field of study.” |
 | Full 15-fragment context | Fifteen transport, campus, class, laboratory, shopping and work fragments | “The person is likely a student... [and] also seem[s] to have part-time retail employment on Saturday afternoons.” |
 
-No single original fragment directly states this complete profile. The conclusion appears only after different activities are connected.
+What interested me here is that no single fragment says this directly. The profile only becomes clear after the different activities are read together.
+
+So the difference between the two conditions was not simply that the longer prompt contained more facts. The model could use those facts to support each other.
 
 ### 5.3 Only reducing the number of fragments does not necessarily reduce the risk
 
-The keyword-ranked subset provided only five fragments, but the leakage score still reached **0.97**.
+The keyword-ranked condition surprised me a little. It contained only five fragments, but its leakage score was still **0.97**.
 
-This result was closer to the full 15-fragment context (**1.00**) than to the ordinary five-fragment history (**0.87**).
+I originally expected it to behave more like the normal five-fragment history, which scored **0.87**. Instead, the result was almost the same as giving the model all 15 fragments.
 
-The reason is that the reduction was not random. The five fragments were selected according to their relevance to the question. Therefore, although the quantity became smaller, the retained information had stronger inferential value.
+After looking back at how the subset was created, this made more sense. The five fragments were not chosen randomly. The ranking process deliberately kept the items that were most related to the question. So although a lot of context had been removed, much of the useful evidence was still there.
 
-This does not prove that all compartmentalisation is ineffective. It only shows that the keyword-ranked method implemented here did not create a strong privacy boundary.
+I would not take this result to mean that compartmentalisation itself does not work. What failed here was this particular implementation. It reduced the number of fragments, but it did not separate the information that supported the same inference.
 
 ### 5.4 Activity linking was the easiest content to infer
 
 [[FIGURE:category]]
 
-After comparing the question categories separately, I found that **links between activities** were the easiest content for the model to infer.
+When I separated the results by question type, **activity linking** stood out immediately. Its average leakage score was **1.00**, the highest of the five categories.
 
-Across all baseline conditions, the average leakage score for this category reached **1.00**. That is to say, when the question asked the model to connect several activities, it almost always reached the expected result.
+The other categories were closer together. Residential context and study or work both scored **0.83**. Away-from-home timing was **0.79**, while financial situation was the lowest at **0.75**.
 
-The differences between the other categories were not very large. Residential context and study or work both had an average score of **0.83**. Absence timing scored **0.79**, and financial situation was the lowest at **0.75**.
+I would be careful about reading too much into this order. I do not think the experiment proves that activity linking is always easier than financial or residential inference. The synthetic profiles were designed with particular kinds of clues, so another dataset could give a different ranking.
 
-I do not think this ranking can be understood as a universal order of which privacy attributes are naturally easier to leak. The scores depend on the synthetic data and ground truth designed for this experiment.
+What the result does show quite clearly in this experiment is that activity information becomes powerful when several records can be connected. Transport, study, shopping or exercise may not say much alone, but they can start to confirm each other when they belong to the same profile.
 
 ### 5.5 Simple mitigation measures had a small but limited effect
 
@@ -233,45 +237,45 @@ I do not think this ranking can be understood as a universal order of which priv
 | Generalise exact time/place | 15 | 0.97 | 0.83 | 0.0% |
 | Sensitive-inference warning | 15 | 0.97 | 0.80 | 0.0% |
 
-Several simple mitigation measures made the leakage score slightly lower, but the overall effect was smaller than I expected.
+The two simple mitigations did change the results, but not by very much.
 
-The first method changed specific information into a more general description. After this change, the measured average leakage score decreased by about **0.03**.
+Generalising exact time and place information reduced the leakage score from **1.00** to **0.97**. Before running the experiment, I expected this difference to be larger.
 
-This exposes a limitation of the scoring method. The current indicator mainly asks **whether an attribute was inferred**. It does not measure well **how specific the inference was**.
+Looking at the answers helped explain why it was so small. Some responses became less specific, but they still reached the same broad attribute. For example, changing an exact location into a more general urban or coastal area may reduce how precise the answer is, but my current scoring system can still give both answers the same leakage score.
 
-The warning reduced the leakage score by about **0.03**, and the average self-reported confidence decreased by about **0.05**.
+This is partly a limitation of the metric rather than only a failure of the mitigation. The score is good at recording whether an attribute appeared. It is much worse at showing how detailed that attribute became.
 
-The model became slightly more cautious and often added expressions such as “possible” and “uncertain”. However, it continued to provide the sensitive inference that the warning was intended to avoid.
+The warning condition had a similar result. Leakage dropped by around **0.03** and reported confidence fell by about **0.05**.
 
-Therefore, a more cautious tone does not mean that the information was not disclosed.
+I noticed that the wording of the answers changed more than their actual content. The model used words like “possible” or “uncertain” more often, but it could still give the sensitive conclusion afterwards.
 
-But for the controls implemented here, **the answer to RQ3 is closer to negative**.
+This mattered because I originally treated uncertainty as a sign of lower leakage. The experiment showed me that these are not the same thing.
 
-Only changing wording in the prompt, or making information vague on the surface, does not change the underlying information structure. As long as a component can see enough connected data, the model still has the opportunity to recombine it.
+For the controls I tested, the warning was not enough on its own. Once the related information was already inside the prompt, telling the model to be careful did not remove the information it could reason from.
 
-This suggests that a stronger control may be to limit data flow earlier rather than repeatedly reminding the model not to infer.
-
-If some information is not necessary for the current task, the more reliable method is not to let it cross the trust boundary. Once all data has entered the context, a warning that asks the model not to use it provides weaker protection.
+A stronger approach would probably be to stop unnecessary context from entering the prompt in the first place.
 
 ## 6. Discussion
 
 ### 6.1 Why some seemingly harmless information becomes sensitive
 
-Each fragment may look ordinary. A bus time only seems to be transport information. A campus location only seems to be study information. An evening tutorial and one shopping event also appear to belong to different purposes.
+Before doing this experiment, I was mainly thinking about privacy in terms of individual pieces of data. A bus time looks like transport information. A campus location looks like study information. A shopping event is just a shopping event.
 
-Therefore, sensitivity is not a fixed property of one field. It also depends on what other information is available, what question is asked, and which system receives the combined data.
+After looking at the results, I do not think this way of checking privacy is enough for an AI system.
 
-If every item is inspected alone, the system may appear safe because none of the fragments contains an exact address, a name or a direct secret. But the combination may still support a residential context, absence window, occupation or financial profile.
+The meaning of one fragment can change depending on what sits next to it. A repeated bus time starts to show a routine. A campus location gives a reason for that routine. An evening class adds information about how long the person may stay away, and a later shopping event may give another clue about the return journey.
 
-Even when the answer includes “may”, “probably” or “cannot confirm”, it may still provide a useful conclusion. The model output should therefore be treated as a disclosure surface. It is not enough to check whether the model used careful language.
+None of these facts suddenly becomes a secret by itself. The problem is that the model can use one fragment to explain another.
+
+This is also why I think the generated answer should be included when reviewing privacy risk. An answer can avoid names and exact addresses and still reveal something useful about where a person lives, when they are away, or what kind of work or study they do.
+
+Careful wording does not necessarily remove this problem. “Probably” and “may” change the confidence of a statement, but the inferred profile may still be there.
 
 ### 6.2 Implications for security design
 
-According to the results of this experiment, I think several measures are more important than simply adding a privacy warning to the prompt.
+The results changed how I think the controls should be placed.
 
-First, **minimise the context when constructing the prompt**.
-
-If the current task only needs two or three pieces of information, there is no need to give the whole history to the model. The earlier unnecessary information is filtered out, the fewer opportunities it has to be recombined later.
+The first place I would look is prompt construction. If a task only needs two or three fragments, sending the whole history gives the model information that has no reason to be there. Removing it before the prompt is created seems safer than trying to control the answer later.
 
 Second, isolation should not only consider quantity. It should also consider why the information is put together.
 
@@ -309,21 +313,19 @@ For example, one answer may only say “the person may live in an urban area”,
 
 In addition, simple expected-term matching may not fully understand meaning. Some answers may not use the preset keywords but may express a similar conclusion. In the opposite situation, an answer may contain a relevant word without having enough supporting evidence.
 
-If this project continues, I think scoring should be divided into at least two parts. One part should ask whether the **attribute was disclosed**. The other should ask **how specific the disclosure was**.
+If I continue the project, I would score two things separately. One is whether the **attribute was disclosed**. The other is **how specific the disclosure was**.
 
-The current scoring was also mainly completed by me. If a second scorer who did not know the experiment conditions coded the answers, the agreement between two scorers could be compared. This would reduce the risk that knowing the expected answer makes a vague response easier to judge as a successful inference.
+I also did most of the current scoring myself. A useful next step would be to ask a second scorer who does not know the experiment condition to code the same answers. I could then compare the two sets of scores. This would help show whether knowing the expected answer made me more likely to accept a vague response.
 
 ### Internal validity
 
-During the experiment, I tried to keep the prompt template fixed and used a new Temporary Chat each time. This reduced the influence of one test on the next.
+I kept the prompt template fixed and opened a new Temporary Chat for each trial. I did this to reduce the chance that one test would affect the next one.
 
-However, I used the ChatGPT web interface, which is a proprietary system. I cannot see every model setting, and the interface did not provide a complete model identifier or backend parameters.
+The web interface still limited how much I could control. It is a proprietary system, and I could not see every model setting, a complete model identifier or the backend parameters.
 
-Therefore, even if the input prompt is exactly the same, I cannot assume that I control every variable in model operation.
+Because of this, the same input prompt does not mean that every part of the model environment was under my control.
 
-The experiment prompt itself may also affect the answer.
-
-For example, I required the model to return a fixed JSON format and added privacy-related instructions. These settings made later parsing and comparison easier, but they may also have made the model more cautious than in an ordinary chat.
+The prompt format may have changed the answers as well. I asked for fixed JSON and included privacy-related instructions. This made parsing and comparison easier, but it may also have made the model more cautious than it would be in an ordinary chat.
 
 Temporary Chat can only reduce the effect of personalised memory that I can observe. It cannot prove that there is no other safety context, system-level instruction or platform state that I cannot see.
 
@@ -381,11 +383,11 @@ There is a cost to this choice. After the sample became smaller, it became more 
 
 The experiment also did not depend on a paid API. It could be completed through the web interface. This limited some automation, but it was also closer to the way an ordinary user may use ChatGPT.
 
-This problem appeared in the first scoring process. The original scoring code depended too much on the uncertainty flag provided by the model. As a result, some answers had already disclosed the target attribute but received a low score because their tone was cautious.
+This problem appeared in the first scoring process. The original scoring code depended too much on the uncertainty flag provided by the model. When I checked the answers again, I found that some had already disclosed the target attribute even though their cautious tone had produced a low score.
 
-Later, I modified the scoring logic, added a regression test and rescored all records.
+I changed the scoring order, added a regression test and then scored all the records again.
 
-This was one of the most important lessons for me in the project: **safety wording and actual information disclosure are not the same thing**.
+For me, this was one of the most useful lessons from the project: **safety wording and actual information disclosure are not the same thing**.
 
 An answer may sound cautious, but this does not mean that it says less. Compared with how many times the model uses words such as “possible”, “probably” and “cannot confirm”, the more important question is how much useable information it finally communicates.
 
@@ -439,11 +441,11 @@ If different data belongs to different purposes, it should remain isolated as mu
 
 The privacy warning in the prompt may still be useful, but it is more suitable as a second layer of protection than as the main security boundary.
 
-If unnecessary data does not enter the model context, the model cannot use that information for inference. This is more direct than making all the data visible and then reminding the model “do not use it”.
+If unnecessary data does not enter the model context, the model cannot use that information for inference. For me, this is safer than showing the model everything and then telling it “do not use it”.
 
-Future work can add more synthetic users, different models and different languages. It can also test stricter purpose isolation, secure retrieval and other mitigation methods.
+If I continue the project, I would add more synthetic users, models and languages. I would also test stricter purpose isolation, secure retrieval and other mitigation methods.
 
-For me, one of the main changes in understanding is this: **the information itself may not suddenly become more sensitive. What changes is how much information the system puts together and how many opportunities the model has to reconnect it.**
+The main change in my own understanding was not about one fragment suddenly becoming sensitive. It was about how much information the system puts together and how many chances the model gets to reconnect it.
 
 ## References
 
@@ -480,7 +482,7 @@ Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1
 | Final test evidence | `evidence/final_test_run.txt` |
 | Work diary | `evidence/work_diary.md` |
 
-The project repository and evidence package are available in the [GitHub project repository](https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project). The fixed Git tag `COMP6441-final-submission-v6` identifies the submitted snapshot. It includes source files, corrected formal responses, analysis outputs, report artefacts and development history. The v3 tag preserves the pre-audit state, and v4 preserves the corrected report before the final language revision.
+The project repository and evidence package are available in the [GitHub project repository](https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project). The fixed Git tag `COMP6441-final-submission-v7` identifies the submitted snapshot. It includes source files, corrected formal responses, analysis outputs, report artefacts and development history. The v3 tag preserves the pre-audit state, and v4 preserves the corrected report before the final language revision.
 
 ## Appendix B. Reproduction Commands
 
