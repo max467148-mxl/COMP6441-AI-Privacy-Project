@@ -21,4 +21,4 @@
 - [x] Generative AI use disclosed in the report.
 - [x] Response-copy errors preserved in v3 history and corrected in v4.
 - [x] Public repository linked through a short report hyperlink.
-- [x] Final snapshot marked by `COMP6441-final-submission-v4`; earlier tags remain unchanged.
+- [x] Final snapshot marked by `COMP6441-final-submission-v5`; earlier tags remain unchanged.
