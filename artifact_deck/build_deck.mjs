@@ -143,20 +143,20 @@ async function main() {
   {
     const s = deck.slides.add();
     s.background.fill = C.white;
-    title(s, "More linked context drove leakage from 0.53 to 0.97", 4);
+    title(s, "More linked context drove leakage from 0.53 to 1.00", 4);
     s.charts.add("bar", {
       position: { left: 60, top: 160, width: 735, height: 430 },
       categories: ["No memory", "Limited", "Compartment", "Full aggregate"],
-      series: [{ name: "Leakage score (%)", values: [53, 83, 93, 97], fill: C.blue }],
+      series: [{ name: "Leakage score (%)", values: [53, 87, 97, 100], fill: C.blue }],
       hasLegend: false,
       dataLabels: { showValue: true, position: "outEnd" },
       yAxis: { min: 0, max: 100, majorUnit: 20, majorGridlines: { style: "solid", fill: "#E4E7EA", width: 1 } },
     });
     shape(s, "result-callout", "rect", 845, 170, 340, 175, C.panel);
-    text(s, "result-value", "+0.44", 870, 200, 270, 60, 44, { bold: true, color: C.blue });
+    text(s, "result-value", "+0.47", 870, 200, 270, 60, 44, { bold: true, color: C.blue });
     text(s, "result-copy", "leakage increase from one fragment to all fifteen", 870, 275, 270, 54, 18, { color: C.muted });
     shape(s, "confidence-callout", "rect", 845, 375, 340, 175, C.pale);
-    text(s, "confidence-value", "0.55 → 0.83", 870, 405, 285, 54, 35, { bold: true });
+    text(s, "confidence-value", "0.54 → 0.84", 870, 405, 285, 54, 35, { bold: true });
     text(s, "confidence-copy", "mean model-reported confidence also increased", 870, 475, 275, 54, 18, { color: C.muted });
     text(s, "result-footnote", "Baseline only; n = 15 responses per condition. Descriptive scores, not population estimates.", 60, 625, 1120, 28, 14, { color: C.muted });
   }
@@ -169,15 +169,15 @@ async function main() {
     s.charts.add("bar", {
       position: { left: 60, top: 165, width: 690, height: 420 },
       categories: ["No mitigation", "Generalise details", "Warning prompt"],
-      series: [{ name: "Leakage score (%)", values: [97, 93, 97], fill: C.red }],
+      series: [{ name: "Leakage score (%)", values: [100, 97, 97], fill: C.red }],
       hasLegend: false,
       dataLabels: { showValue: true, position: "outEnd" },
       yAxis: { min: 0, max: 100, majorUnit: 20, majorGridlines: { style: "solid", fill: "#E4E7EA", width: 1 } },
     });
     const findings = [
-      ["Exact-detail redaction", "Only a 0.04 reduction; broader routines still linked."],
-      ["Sensitive-inference warning", "No score reduction; confidence fell by about 0.03."],
-      ["Weak compartments", "Five correlated fragments still leaked 0.93."],
+      ["Exact-detail redaction", "Only a 0.03 reduction; broader routines still linked."],
+      ["Sensitive-inference warning", "Only a 0.03 reduction; confidence fell by about 0.05."],
+      ["Weak compartments", "Five correlated fragments still leaked 0.97."],
     ];
     findings.forEach(([h, b], i) => {
       const y = 168 + i * 145;

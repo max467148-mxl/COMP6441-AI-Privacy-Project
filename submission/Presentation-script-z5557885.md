@@ -14,11 +14,11 @@ I created three synthetic profiles with fifteen fragments each and asked five st
 
 ## Slide 4 — Context increased leakage (2:05–2:55)
 
-The strongest result is the context gradient. Mean leakage was 0.53 with one fragment, 0.87 with five, 0.97 in the keyword-ranked subset and 1.00 with all fifteen. Model-reported confidence rose from 0.54 to 0.84. These are descriptive scores across fifteen responses per condition, not population estimates. Full aggregation changed both the frequency and confidence of privacy-sensitive inference.
+The strongest result is the context gradient. Mean leakage was 0.53 with one fragment, 0.87 with five, 0.97 in the keyword-ranked subset and 1.00 with all fifteen. Model-reported confidence rose from 0.54 to 0.84. These are descriptive scores across fifteen responses per condition. They are not population estimates. Full aggregation changed both the frequency and confidence of privacy-sensitive inference.
 
 ## Slide 5 — Weak mitigations failed (2:55–3:50)
 
-The mitigations were less effective than expected. Generalising exact time and place details reduced leakage only from 1.00 to 0.97 because the broader routine remained linkable. A warning instruction produced the same small reduction. The keyword-ranked subset retained 0.97 leakage because its five fragments were correlated. A label is not enough. Boundaries must be designed around purpose and tested for the inferences they still enable.
+The mitigations were less effective than expected. Generalising exact time and place details reduced leakage only from 1.00 to 0.97 because the broader routine remained linkable. A warning instruction produced the same small reduction. It lowered mean confidence by about 0.05. The keyword-ranked subset retained 0.97 leakage because its five fragments were correlated. A label is not enough. Boundaries must be designed around purpose and tested for the inferences they still enable.
 
 During analysis I also found a scoring defect: the first version treated an uncertainty flag as a refusal before checking the answer. Some answers were cautious but still revealed the target attribute. I corrected the scoring order, added a regression test and rescored all records. This reinforced that privacy should be measured by information disclosed, not by cautious wording.
 
