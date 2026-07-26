@@ -25,3 +25,4 @@ submission/*.inspect.ndjson
 submission/*.zip
 submission/*.bundle
 ~$*.docx
+~WRL*.tmp

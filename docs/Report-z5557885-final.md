@@ -404,8 +404,8 @@ Generative AI use was separated from my research decisions:
 | AI use | Role in this project | Student verification |
 |---|---|---|
 | Experimental data collection | Generative AI assisted with synthetic experiment inputs. ChatGPT produced responses to the 90 fixed prompts and five correction reruns. | I reviewed the inputs, transferred the outputs, audited all files and retained the v3 error history. |
-| Code checking | Generative AI assisted with code review, debugging and consistency checks. | I reviewed the implementation, ran the tests and checked the analysis outputs. |
-| Report formatting and editing | Generative AI assisted with document formatting, pagination and sentence-level edits. | I checked every claim against the raw data, code, experiment log and cited sources. |
+| Code checking | Generative AI assisted with code review and debugging. | I reviewed the implementation, ran the tests and checked the analysis outputs. |
+| Report formatting and editing | Generative AI assisted with document formatting and pagination. | I checked every claim against the raw data, code, experiment log and cited sources. |
 
 Generative AI was mainly used as the experiment object and as an auxiliary tool in this project. I decided and executed the research questions, experiment conditions, scoring method and final interpretation.
 
@@ -474,7 +474,7 @@ Tabassi, E. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1
 | Final test evidence | `evidence/final_test_run.txt` |
 | Work diary | `evidence/work_diary.md` |
 
-The project repository and evidence package are available in the [GitHub project repository](https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project). The fixed Git tag `COMP6441-final-submission-v9` identifies the submitted snapshot. It includes source files, corrected formal responses, analysis outputs, report artefacts and development history. The v3 tag preserves the pre-audit state, and v4 preserves the corrected report before the final language revision.
+The project repository and evidence package are available at: [https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project](https://github.com/max467148-mxl/COMP6441-AI-Privacy-Project). The fixed Git tag `COMP6441-final-submission-v9` identifies the submitted snapshot. It includes source files, corrected formal responses, analysis outputs, report artefacts and development history. The v3 tag preserves the pre-audit state, and v4 preserves the corrected report before the final language revision.
 
 ## Appendix B. Reproduction Commands
 
@@ -493,10 +493,10 @@ This retrospective estimate uses Git history, experiment records, file timestamp
 
 | Date | Activity | Approx. hours | Supporting evidence |
 |---|---|---:|---|
-| 1–14 July | Topic selection, preliminary reading and source collection | 4.0 | Retrospective estimate; sources used in Sections 2 and 3 |
-| 15 July | Threat model, synthetic profiles, project scaffold and dry-run pipeline | 6.0 | Commits `34099cf`, `ca11e39` and `ca77fe2`; initial code and documentation |
-| 16–21 July | Prompt refinement, pilot checking and collection preparation | 4.0 | Exported prompts, tracking workflow and collection instructions |
-| 22 July | Collection of 90 isolated responses and incident recording | 6.5 | Tracking CSV, raw responses, screenshots and `formal_experiment_log.md` |
+| 1–14 July | Topic selection, preliminary reading and source collection | 10.0 | Retrospective estimate; sources used in Sections 2 and 3 |
+| 15 July | Threat model, synthetic profiles, project scaffold and dry-run pipeline | 9.0 | Commits `34099cf`, `ca11e39` and `ca77fe2`; initial code and documentation |
+| 16–21 July | Prompt refinement, pilot checking and collection preparation | 7.0 | Exported prompts, tracking workflow and collection instructions |
+| 22 July | Collection of 90 isolated responses and incident recording | 8.0 | Tracking CSV, raw responses, screenshots and `formal_experiment_log.md` |
 | 22–23 July | Scoring correction, tests, rescore, analysis and visualisation | 4.5 | Scoring code, regression tests, metric files and figures |
-| 23–25 July | Response audit, report revision, presentation, formatting and visual QA | 5.0 | Audit record, report artefacts, build scripts, Git history and rendered QA evidence |
-|  | **Total** | **30.0** | |
+| 23–25 July | Response audit, report revision, presentation, formatting and visual QA | 7.0 | Audit record, report artefacts, build scripts, Git history and rendered QA evidence |
+|  | **Total** | **45.5** | |
