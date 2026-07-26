@@ -157,7 +157,7 @@ def add_table(doc, rows):
     if len(rows[0]) == 3:
         weights = [2.2, 1.2, 3.3]
     elif len(rows[0]) == 4:
-        weights = [0.9, 2.3, 1.0, 3.2] if rows[0][0].strip() == "Date" else [2.7, 0.7, 1.1, 1.4]
+        weights = [0.8, 2.1, 0.8, 3.7] if rows[0][0].strip() == "Date" else [2.7, 0.7, 1.1, 1.4]
     total = sum(weights)
     for r_index, values in enumerate(rows):
         row = table.rows[0] if r_index == 0 else table.add_row()
@@ -171,7 +171,7 @@ def add_table(doc, rows):
             paragraph.paragraph_format.space_after = Pt(0)
             add_inline(paragraph, value.strip())
             for run in paragraph.runs:
-                run.font.size = Pt(8.5)
+                run.font.size = Pt(8 if rows[0][0].strip() == "Date" and i == len(values) - 1 else 8.5)
                 if r_index == 0:
                     run.bold = True
                     run.font.color.rgb = RGBColor(255, 255, 255)
@@ -343,8 +343,6 @@ def build():
             continue
         if line.startswith("### "):
             title = line[4:]
-            if title.startswith("3.3 Original proposal"):
-                doc.add_page_break()
             doc.add_heading(title, level=2)
         elif line.startswith("## "):
             title = line[3:]
